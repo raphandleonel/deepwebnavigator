@@ -41,3 +41,36 @@ export const RELATED_POST_QUERY =
     },
         excerpt
       }`);
+
+export const AUTHOR_QUERY = defineQuery(`
+  *[_type == "author" && slug.current == $slug][0] {
+    name,
+    bio,
+    "posts": *[_type == "post" && author._ref == ^._id] | order(publishedAt desc) {
+      title,
+      slug,
+      publishedAt,
+      image,
+      excerpt
+    }
+  }
+`);
+
+export const CATEGORY_QUERY = defineQuery(`
+  *[_type == "category" && slug.current == $slug][0] {
+    title,
+    "posts": *[_type == "post" && category._ref == ^._id] | order(publishedAt desc) {
+      title,
+      slug,
+      publishedAt,
+      image,
+      excerpt,
+      author-> {
+    name,
+    slug,
+    image
+  },
+      category-> { title, slug },
+    }
+  }
+`);

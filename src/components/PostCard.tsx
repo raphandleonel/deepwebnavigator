@@ -43,12 +43,10 @@ export default function PostCard({
           <Image
             src={urlFor(post.image).url()}
             alt={post.title}
-            layout="responsive"
+            layout="fill"
             objectFit={size === "small" ? "contain" : "cover"}
             className="rounded-lg transform hover:scale-110 transition-transform duration-500 ease-out"
             loading="lazy"
-            width={size === "small" ? 100 : 500}
-            height={size === "small" ? 100 : 500}
           />
         ) : (
           <div className="flex items-center justify-center w-full h-full bg-gray-800 text-gray-400 rounded-lg">
