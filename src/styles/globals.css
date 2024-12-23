@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Default Theme Variables */
+:root {
+  --background: #ffffff; /* Light mode background */
+  --foreground: #0a0a0a; /* Light mode foreground */
+  --primary: #0a0a0a; /* Text color */
+  --secondary: #1a1a1a; /* Secondary elements */
+  --accent: #1d4ed8; /* Accent (blue) */
+  --highlight: #f59e0b; /* Highlight (yellow) */
+}
+
+/* Dark Mode Variables */
+[data-theme="dark"] {
+  --background: #0a0a0a; /* Dark mode background */
+  --foreground: #ffffff; /* Dark mode foreground */
+  --primary: #ffffff;
+  --secondary: #1a1a1a;
+  --accent: #3b82f6; /* Lighter blue for dark mode */
+  --highlight: #eab308; /* Lighter yellow for dark mode */
+}
+
+/* Base Body Styles */
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: "Inter", Arial, Helvetica, sans-serif; /* Match Tailwind font */
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease; /* Smooth transition */
+}
+
+/* Accessibility - System Theme */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --background: #0a0a0a;
+    --foreground: #ffffff;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --background: #ffffff;
+    --foreground: #0a0a0a;
+  }
+}
+
+/* Light Theme */
+:root {
+  --section-bg-start: #ffffff; /* Adjust light gradient start color */
+  --section-bg-end: #f9f9f9; /* Adjust light gradient end color */
+}
+
+/* Dark Theme */
+[data-theme="dark"] {
+  --section-bg-start: #1a1a1a; /* Adjust dark gradient start color */
+  --section-bg-end: #0f0f0f; /* Adjust dark gradient end color */
+}
