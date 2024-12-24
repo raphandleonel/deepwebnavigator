@@ -9,7 +9,7 @@ export default function Layout({ children, title, description }: LayoutProps) {
   return (
     <>
       <Head>
-        <title>{title || "Deep Web Navigator"}</title>
+        <title>{title || "Dark Web Navigator"}</title>
         <meta
           name="description"
           content={

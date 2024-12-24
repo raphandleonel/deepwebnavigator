@@ -44,15 +44,15 @@ export default function HomePage({ posts }: { posts: Post[] }) {
   return (
     <>
       <Head>
-        <title>Homepage - Deep Web Navigator</title>
+        <title>Homepage - Dark Web Navigator</title>
         <meta
           name="description"
-          content="Discover the latest featured, trending, and insightful posts on Deep Web Navigator."
+          content="Discover the latest featured, trending, and insightful posts on Dark Web Navigator."
         />
-        <meta property="og:title" content="Homepage - Deep Web Navigator" />
+        <meta property="og:title" content="Homepage - Dark Web Navigator" />
         <meta
           property="og:description"
-          content="Discover the latest featured, trending, and insightful posts on Deep Web Navigator."
+          content="Discover the latest featured, trending, and insightful posts on Dark Web Navigator."
         />
         <meta
           property="og:image"
@@ -67,7 +67,7 @@ export default function HomePage({ posts }: { posts: Post[] }) {
             "@context": "https://schema.org",
             "@type": "Blog",
             url: "https://deepwebnavigator.com",
-            name: "Deep Web Navigator",
+            name: "Dark Web Navigator",
             article: posts.map((post) => ({
               "@type": "BlogPosting",
               headline: post.title,

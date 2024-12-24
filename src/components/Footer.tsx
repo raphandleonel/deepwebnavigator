@@ -63,7 +63,7 @@ export default function Footer() {
       <div className="container mx-auto text-center space-y-6 max-w-screen-lg">
         {/* Logo */}
         <div>
-          <h2 className="text-2xl font-bold text-accent">Deep Web Navigator</h2>
+          <h2 className="text-2xl font-bold text-accent">Dark Web Navigator</h2>
         </div>
 
         {/* Social Media Links */}
@@ -97,7 +97,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="text-sm text-gray-400">
-          © {new Date().getFullYear()} Deep Web Navigator - Cyber Threat
+          © {new Date().getFullYear()} Dark Web Navigator - Cyber Threat
           Intelligence. All rights reserved.
         </div>
       </div>

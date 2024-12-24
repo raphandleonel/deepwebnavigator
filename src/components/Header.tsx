@@ -39,14 +39,14 @@ export default function Header() {
         <Link href="/" className="flex items-center">
           <Image
             src="/logo.png" // Adjust to your logo path
-            alt="Deep Web Navigator Logo"
+            alt="Dark Web Navigator Logo"
             width={60}
             height={60}
             className={resolvedTheme === "dark" ? "block" : "hidden"}
           />
           <Image
             src="/logo.png" // Adjust to your logo path
-            alt="Deep Web Navigator Logo"
+            alt="Dark Web Navigator Logo"
             width={60}
             height={60}
             className={resolvedTheme === "light" ? "block" : "hidden"}
