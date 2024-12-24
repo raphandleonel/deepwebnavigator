@@ -86,7 +86,9 @@ export default function PostCard({
         {/* Author and Date */}
         <div className="mt-2 sm:mt-3 flex flex-col">
           <p className="text-sm sm:text-l  text-gray-400 uppercase">
-            {post.author.name}
+            <Link href={`/author/${post.author.slug.current}`}>
+              {post.author.name}
+            </Link>
           </p>
           <p className="text-xs sm:text-sm text-gray-500">
             {formateDate(post.publishedAt)}

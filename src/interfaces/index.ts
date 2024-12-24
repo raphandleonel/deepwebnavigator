@@ -35,6 +35,7 @@ export interface Post {
         url: string;
       };
     };
+    bio?: string;
   };
 }
 

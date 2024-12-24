@@ -19,7 +19,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 
   return {
     props: {
-      author: authorData.author,
+      author: authorData,
       posts: authorData.posts,
     },
     revalidate: 30,

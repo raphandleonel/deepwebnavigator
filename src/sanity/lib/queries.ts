@@ -51,7 +51,13 @@ export const AUTHOR_QUERY = defineQuery(`
       slug,
       publishedAt,
       image,
-      excerpt
+      excerpt,
+      author-> {
+    name,
+    slug,
+    image
+  },
+      category-> { title, slug },
     }
   }
 `);
