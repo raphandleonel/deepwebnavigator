@@ -56,7 +56,7 @@ export default function HomePage({ posts }: { posts: Post[] }) {
         />
         <meta
           property="og:image"
-          content="https://yourwebsite.com/og-image.jpg"
+          content="https://darkwebnavigator.com/og-image.jpg"
         />
       </Head>
       <Script
@@ -66,7 +66,7 @@ export default function HomePage({ posts }: { posts: Post[] }) {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Blog",
-            url: "https://deepwebnavigator.com",
+            url: "https://darkwebnavigator.com",
             name: "Dark Web Navigator",
             article: posts.map((post) => ({
               "@type": "BlogPosting",
