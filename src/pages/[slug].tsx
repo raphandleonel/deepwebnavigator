@@ -85,8 +85,8 @@ export default function PostPage({
     <div className="m-auto pb-10 px-4 sm:px-8 max-w-[1170px]">
       <Head>
         <title>{post.title}</title>
-        <meta name="description" content={post.excerpt} />
-        <meta property="og:title" content={post.title} />
+        <meta name="description" content={post.seoDescription} />
+        <meta property="og:title" content={post.seoTitle} />
         <meta property="og:description" content={post.excerpt} />
         {post.image && (
           <meta property="og:image" content={urlFor(post.image).url()} />

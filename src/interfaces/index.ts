@@ -19,6 +19,8 @@ export interface Post {
     };
   };
   excerpt: string;
+  seoTitle: string;
+  seoDescription: string;
   category: {
     title: string;
     slug: {
@@ -44,4 +46,27 @@ export interface SectionLayoutProps {
   seeAllLink?: string;
   posts: Post[];
   isLastSection?: boolean;
+}
+
+export interface BannerLink {
+  linkType: "internal" | "external";
+  postLink?: {
+    slug: {
+      current: string;
+    };
+  };
+  externalLink?: string;
+}
+
+export interface IBanner {
+  title: string;
+  position: number;
+  media: {
+    asset: {
+      url: string;
+    };
+  };
+  linkType: "internal" | "external";
+  postLink?: { slug: { current: string } };
+  externalLink?: string;
 }

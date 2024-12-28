@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Post } from "@/interfaces";
 import { urlFor } from "@/utils/imageBuilder";
 import { formateDate } from "@/utils/formatDate";
+import { UserIcon, CalendarIcon } from "@heroicons/react/24/outline";
 
 interface PostCardProps {
   post: Post;
@@ -30,10 +31,11 @@ export default function PostCard({
 
   return (
     <article
-      className={`bg-background p-3 sm:p-4 m-3 sm:m-4 rounded-lg shadow-md flex ${
-        layout === "horizontal" ? "flex-row" : "flex-col"
-      } ${size === "large" ? "" : "border border-gray-700"} 
-      hover:shadow-2xl hover:scale-105 transition-transform duration-300 ease-out`}
+      className={`bg-background p-3 sm:p-4 m-2 flex ${
+        layout === "horizontal"
+          ? "flex-row-reverse border-t border-gray-700 gap-2"
+          : "flex-col border border-gray-700 rounded-lg shadow-md"
+      } max-h-max`}
     >
       {/* Image Section */}
       <div
@@ -44,7 +46,7 @@ export default function PostCard({
             src={urlFor(post.image).url()}
             alt={post.title}
             layout="fill"
-            objectFit={size === "small" ? "contain" : "cover"}
+            objectFit="cover"
             className="rounded-lg transform hover:scale-110 transition-transform duration-500 ease-out"
             loading="lazy"
           />
@@ -57,44 +59,56 @@ export default function PostCard({
 
       {/* Content Section */}
       <div
-        className={`${contentWrapperStyles} ${
-          size === "large" ? "text-center" : "text-left"
-        }`}
+        className={`${contentWrapperStyles}  ${layout === "horizontal" ? "text-left" : "text-center"} overflow-hidden`}
       >
-        {/* Category */}
-        <Link href={`/category/${post.category.slug.current}`}>
-          <p className="text-xs sm:text-sm font-semibold text-highlight uppercase tracking-wide">
-            {post.category.title}
-          </p>
-        </Link>
-
         {/* Title */}
         <Link href={`/${post.slug.current}`}>
           <h3
-            className={`text-foreground hover:underline mt-1 sm:mt-2 ${
-              size === "large"
-                ? "text-lg sm:text-3xl font-bold"
-                : size === "medium"
-                  ? "text-base sm:text-xl font-semibold"
-                  : "text-sm sm:text-base font-medium"
-            } line-clamp-3`}
+            className={`text-highlight hover:underline mt-1 sm:mt-2 text-base sm:text-lg font-semibold line-clamp-2`}
           >
             {post.title}
           </h3>
         </Link>
 
-        {/* Author and Date */}
-        <div className="mt-2 sm:mt-3 flex flex-col">
-          <p className="text-sm sm:text-l  text-gray-400 uppercase">
-            <Link href={`/author/${post.author.slug.current}`}>
+        {/* Category */}
+        <Link href={`/category/${post.category.slug.current}`}>
+          <p className="text-xs sm:text-xs uppercase tracking-wide text-gray-500">
+            {post.category.title}
+          </p>
+        </Link>
+        {/* Excerpt */}
+        <p className="text-sm text-gray-400 mt-2 line-clamp-2">
+          {post.excerpt}
+        </p>
+        {/* Author and Date - Moved under the Image Section for horizontal layout */}
+        {layout === "horizontal" && (
+          <div className="mt-2 sm:mt-3 flex items-center text-xs sm:text-sm text-gray-400">
+            <div className="flex items-center space-x-2">
+              <CalendarIcon className="w-4 h-4 text-gray-500" />
+              <p>{formateDate(post.publishedAt)}</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* For vertical layout, author and date stay below the content */}
+      {layout === "vertical" && (
+        <div className="mt-2 sm:mt-3 flex items-center text-xs sm:text-sm text-gray-400">
+          <div className="flex items-center space-x-2">
+            <UserIcon className="w-4 h-4 text-gray-500" />
+            <Link
+              href={`/author/${post.author.slug.current}`}
+              className="text-gray-500"
+            >
               {post.author.name}
             </Link>
-          </p>
-          <p className="text-xs sm:text-sm text-gray-500">
-            {formateDate(post.publishedAt)}
-          </p>
+          </div>
+          <div className="flex items-center space-x-2 ml-4">
+            <CalendarIcon className="w-4 h-4 text-gray-500" />
+            <p>{formateDate(post.publishedAt)}</p>
+          </div>
         </div>
-      </div>
+      )}
     </article>
   );
 }

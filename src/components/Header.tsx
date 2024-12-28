@@ -3,10 +3,20 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 
+import {
+  AcademicCapIcon,
+  HomeIcon,
+  NewspaperIcon,
+  UsersIcon,
+  ShieldExclamationIcon,
+  ShoppingBagIcon,
+} from "@heroicons/react/24/outline";
+import { useRouter } from "next/router";
+
 export default function Header() {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-
+  const router = useRouter(); // Initialize useRouter
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -20,19 +30,40 @@ export default function Header() {
   };
 
   const navigationItems = [
-    { name: "Subscribers", href: "/category/subscribers" },
-    { name: "Cybercrime", href: "/category/cybercrime" },
-    { name: "Intel", href: "/category/intel" },
-    { name: "News", href: "/category/news" },
-    { name: "OSINT", href: "/category/osint" },
-    { name: "Resources", href: "/category/resources" },
-    { name: "Threat Feeds", href: "/category/threat-feeds" },
-    { name: "Visuals", href: "/category/visuals" },
-    { name: "Vulnerabilities", href: "/category/vulnerabilities" },
+    {
+      name: "Home",
+      href: "/",
+      icon: <HomeIcon className="h-5 w-5" />,
+    },
+    {
+      name: "Vendors Shop",
+      href: "/category/darknet-vendors-shop",
+      icon: <ShoppingBagIcon className="h-5 w-5" />,
+    },
+    {
+      name: "News",
+      href: "/category/news",
+      icon: <NewspaperIcon className="h-5 w-5" />,
+    },
+    {
+      name: "Forums",
+      href: "/category/deep-web-forums",
+      icon: <UsersIcon className="h-5 w-5" />,
+    },
+    {
+      name: "Dark Web Markets",
+      href: "/category/top-dark-web-markets",
+      icon: <ShieldExclamationIcon className="h-5 w-5" />,
+    },
+    {
+      name: "Vulnerabilities",
+      href: "/category/vulnerabilities",
+      icon: <AcademicCapIcon className="h-5 w-5" />,
+    },
   ];
 
   return (
-    <header className="bg-background text-foreground border-b border-gray-700 items-center ">
+    <header className="bg-background text-foreground items-center">
       {/* Top Section */}
       <div className="flex items-center justify-between px-4 py-3 container mx-auto">
         {/* Logo */}
@@ -121,21 +152,29 @@ export default function Header() {
       </div>
 
       {/* Navigation */}
-      <nav className="border-t border-gray-700 bg-background">
-        <ul className="flex justify-center items-center space-x-4 px-4 py-3 container mx-auto overflow-auto">
-          {navigationItems.map((item) => (
-            <li
-              key={item.name}
-              className="whitespace-nowrap px-3 py-2 rounded-lg hover:bg-secondary hover:text-highlight transition-colors duration-200"
-            >
-              <Link
-                href={item.href}
-                className="text-base font-semibold text-foreground hover:text-accent"
+      <nav className="border-y border-gray-700 bg-background">
+        <ul className="flex items-center lg:justify-evenly space-x-4 px-4 container mx-auto overflow-x-auto">
+          {navigationItems.map((item) => {
+            const isActive = router.asPath === item.href;
+            return (
+              <li
+                key={item.name}
+                className={`whitespace-nowrap h-full px-3 py-5  transition-colors duration-200 ${
+                  isActive
+                    ? "border-b-4 border-highlight"
+                    : "hover:border-accent hover:border-b-4"
+                }`}
               >
-                {item.name}
-              </Link>
-            </li>
-          ))}
+                <Link
+                  href={item.href}
+                  className="text-xs sm:text-base font-semibold text-foreground hover:text-accent flex items-center"
+                >
+                  {item.icon}
+                  <span className="ml-2">{item.name.toUpperCase()}</span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
     </header>

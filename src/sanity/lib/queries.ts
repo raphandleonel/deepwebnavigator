@@ -1,7 +1,7 @@
 import { defineQuery } from "next-sanity";
 
 export const HOMEPAGE_QUERY = defineQuery(`
-*[_type == "post"] | order(publishedAt desc) [0...8] {
+*[_type == "post" && !(category->slug.current in ["darknet-vendors-shop", "deep-web-forums", "top-dark-web-markets"])] | order(publishedAt desc) [0...8] {
   title,
   slug,
   publishedAt,
@@ -22,6 +22,8 @@ export const POST_QUERY =
   publishedAt,
   category-> { title, slug },
   image,
+  seoTitle,
+  seoDescription,
   excerpt,
   author-> {
     name,
@@ -65,6 +67,8 @@ export const AUTHOR_QUERY = defineQuery(`
 export const CATEGORY_QUERY = defineQuery(`
   *[_type == "category" && slug.current == $slug][0] {
     title,
+    description,
+    keywords,
     "posts": *[_type == "post" && category._ref == ^._id] | order(publishedAt desc) {
       title,
       slug,
@@ -80,3 +84,30 @@ export const CATEGORY_QUERY = defineQuery(`
     }
   }
 `);
+
+export const BANNER_QUERY =
+  defineQuery(`*[_type == "banner"] | order(position asc) {
+        title,
+        media {
+          asset -> {
+            _id,
+            url
+          }
+        },
+        linkType,
+        postLink-> {
+          slug
+        },
+        externalLink
+      }`);
+
+export const MARKET_FORUM_VENDORS_QUERY =
+  defineQuery(`*[_type == "post" && category->slug.current in ["darknet-vendors-shop", "deep-web-forums", "top-dark-web-markets"]]{
+      title,
+      slug,
+      excerpt,
+      body,
+      seoTitle,
+      seoDescription,
+      category->{slug}
+    }`);

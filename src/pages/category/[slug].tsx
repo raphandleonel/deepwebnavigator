@@ -31,14 +31,16 @@ export default function CategoryPage({
   category,
   posts,
 }: {
-  category: { title: string };
+  category: { title: string; description: string; keywords: string[] };
   posts: Post[];
 }) {
-  console.log({ post: JSON.stringify(posts) });
+  const keywords = category.keywords ? category.keywords.join(", ") : "";
   return (
     <div className="container mx-auto px-4 py-8">
       <Head>
         <title>{category.title}</title>
+        <meta name="description" content={category.description || ""} />
+        {keywords && <meta name="keywords" content={keywords} />}
       </Head>
       <h1 className="text-3xl font-bold mb-4">{category.title}</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -1,7 +1,11 @@
 import { client } from "@/sanity/lib/client";
-import { HOMEPAGE_QUERY } from "@/sanity/lib/queries";
-import { Post, SectionLayoutProps } from "@/interfaces";
-import Hero from "@/components/Hero";
+import {
+  BANNER_QUERY,
+  HOMEPAGE_QUERY,
+  MARKET_FORUM_VENDORS_QUERY,
+} from "@/sanity/lib/queries";
+import { IBanner, Post, SectionLayoutProps } from "@/interfaces";
+import Banner from "@/components/Banner";
 import ThreeColumnLayout from "@/components/ThreeColumnLayout";
 import Head from "next/head";
 import Script from "next/script";
@@ -9,35 +13,35 @@ import SectionLayout from "@/components/SectionLayout";
 
 export async function getStaticProps() {
   const posts = await client.fetch<Post[]>(HOMEPAGE_QUERY);
-  return { props: { posts } };
+  const banners = await client.fetch<IBanner[]>(BANNER_QUERY);
+  const marketForumVendors = await client.fetch<Post[]>(
+    MARKET_FORUM_VENDORS_QUERY
+  );
+
+  return { props: { posts, banners, marketForumVendors }, revalidate: 600 }; // 600 seconds = 10 minutes
 }
 
-export default function HomePage({ posts }: { posts: Post[] }) {
-  const featuredPosts = posts.slice(0, 2); // Column 1
-  const mainPost = posts[3]; // Center column (largest, single post)
+export default function HomePage({
+  posts,
+  banners,
+  marketForumVendors,
+}: {
+  posts: Post[];
+  banners: IBanner[];
+  marketForumVendors: Post[];
+}) {
+  const featuredPosts = posts.slice(0, 4); // Column 1
   const latestPosts = posts.slice(1, 5); // Column 3 (smaller posts)
-  // Example sections data
   const sections: SectionLayoutProps[] = [
     {
-      title: "Data Breaches",
-      seeAllLink: "/category/data-breaches",
-      posts: posts.slice(0, 4),
-    },
-    {
-      title: "Leaks",
-      seeAllLink: "/category/leaks",
-      posts: posts.slice(1, 5),
+      title: "News",
+      seeAllLink: "/category/news",
+      posts: posts.filter((i) => i.category.slug.current === "news"),
     },
     {
       title: "Vulnerabilities",
       seeAllLink: "/category/vulnerabilities",
-      posts: posts.slice(0, 4),
-    },
-    {
-      title: "Ransomware",
-      seeAllLink: "/category/ransomware",
-      posts: posts.slice(1, 5),
-      isLastSection: true,
+      posts: posts.filter((i) => i.category.slug.current === "vulnerabilities"),
     },
   ];
 
@@ -47,17 +51,30 @@ export default function HomePage({ posts }: { posts: Post[] }) {
         <title>Homepage - Dark Web Navigator</title>
         <meta
           name="description"
-          content="Discover the latest featured, trending, and insightful posts on Dark Web Navigator."
+          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web, including access to hidden websites, darknet forums, and tools for private communication"
         />
         <meta property="og:title" content="Homepage - Dark Web Navigator" />
         <meta
           property="og:description"
-          content="Discover the latest featured, trending, and insightful posts on Dark Web Navigator."
+          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web, including access to hidden websites, darknet forums, and tools for private communication"
         />
         <meta
           property="og:image"
           content="https://darkwebnavigator.com/og-image.jpg"
         />
+
+        {/* Twitter card tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Homepage - Dark Web Navigator" />
+        <meta
+          name="twitter:description"
+          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web..."
+        />
+        <meta
+          name="twitter:image"
+          content="https://darkwebnavigator.com/og-image.jpg"
+        />
+        <meta name="twitter:site" content="@darkwebnavigator" />
       </Head>
       <Script
         type="application/ld+json"
@@ -76,13 +93,13 @@ export default function HomePage({ posts }: { posts: Post[] }) {
           }),
         }}
       />
-      {/* Hero Section */}
-      <Hero />
+      {/* Banner Section */}
+      <Banner banners={banners} /> {/* Pass banners to Banner component */}
       {/* Three-Column Layout */}
       <ThreeColumnLayout
-        featuredPosts={featuredPosts}
-        mainPost={mainPost}
+        featurePosts={featuredPosts}
         latestPosts={latestPosts}
+        marketForumVendors={marketForumVendors}
       />
       {/* Render Sections Dynamically */}
       {sections.map((section, index) => (
