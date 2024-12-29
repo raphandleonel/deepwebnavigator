@@ -25,6 +25,7 @@ export const POST_QUERY =
   seoTitle,
   seoDescription,
   excerpt,
+  "tags": tags[]-> { title, slug },
   author-> {
     name,
     slug,
@@ -109,5 +110,10 @@ export const MARKET_FORUM_VENDORS_QUERY =
       body,
       seoTitle,
       seoDescription,
-      category->{slug}
+      category->{slug},
+      cryptocurrency,
+      links[] {
+        name,
+        url
+      }
     }`);

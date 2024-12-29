@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
-
 import {
   AcademicCapIcon,
   HomeIcon,
@@ -10,13 +9,15 @@ import {
   UsersIcon,
   ShieldExclamationIcon,
   ShoppingBagIcon,
+  ChevronDownIcon, // Import Chevron Down Icon from Heroicons
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 
 export default function Header() {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter();
+  const [showDropdown, setShowDropdown] = useState(false); // State to control dropdown visibility
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -26,7 +27,7 @@ export default function Header() {
   const toggleTheme = () => {
     const newTheme = resolvedTheme === "dark" ? "light" : "dark";
     setTheme(newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme); // Sync `data-theme` attribute with selected theme
+    document.documentElement.setAttribute("data-theme", newTheme);
   };
 
   const navigationItems = [
@@ -36,14 +37,14 @@ export default function Header() {
       icon: <HomeIcon className="h-5 w-5" />,
     },
     {
-      name: "Vendors Shop",
-      href: "/category/darknet-vendors-shop",
-      icon: <ShoppingBagIcon className="h-5 w-5" />,
-    },
-    {
       name: "News",
       href: "/category/news",
       icon: <NewspaperIcon className="h-5 w-5" />,
+    },
+    {
+      name: "Dark Web Markets",
+      href: "/category/top-dark-web-markets",
+      icon: <ShieldExclamationIcon className="h-5 w-5" />,
     },
     {
       name: "Forums",
@@ -51,9 +52,9 @@ export default function Header() {
       icon: <UsersIcon className="h-5 w-5" />,
     },
     {
-      name: "Dark Web Markets",
-      href: "/category/top-dark-web-markets",
-      icon: <ShieldExclamationIcon className="h-5 w-5" />,
+      name: "Darknet Vendors",
+      href: "/category/darknet-vendors-shop",
+      icon: <ShoppingBagIcon className="h-5 w-5" />,
     },
     {
       name: "Vulnerabilities",
@@ -69,14 +70,14 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
-            src="/logo.png" // Adjust to your logo path
+            src="/logo.png"
             alt="Dark Web Navigator Logo"
             width={60}
             height={60}
             className={resolvedTheme === "dark" ? "block" : "hidden"}
           />
           <Image
-            src="/logo.png" // Adjust to your logo path
+            src="/logo.png"
             alt="Dark Web Navigator Logo"
             width={60}
             height={60}
@@ -85,23 +86,39 @@ export default function Header() {
         </Link>
 
         <div className="items-center space-x-4 flex">
-          {/* Sign In / Subscribe */}
-          <div className="hidden sm:flex items-center space-x-4">
-            <Link href="/signin" className="text-sm font-semibold">
-              Sign In
-            </Link>
-            <Link
-              href="/subscribe"
-              className="px-4 py-2 rounded-md font-semibold transition-colors duration-200"
-              style={{
-                backgroundColor: "var(--accent)",
-                color: "var(--foreground)",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              Subscribe
-            </Link>
+          {/* Support Dropdown */}
+          <div
+            className="relative group" // Wrap the button and dropdown in a group for hover behavior
+            onMouseEnter={() => setShowDropdown(true)} // Show dropdown on hover
+          >
+            <button className="flex items-center text-sm font-semibold">
+              Support
+              <ChevronDownIcon
+                className={`h-4 w-4 ml-2 transition-transform ${showDropdown ? "rotate-180" : ""}`}
+              />
+            </button>
+
+            {showDropdown && (
+              <div
+                className="absolute right-0 mt-2 bg-white shadow-md rounded-md py-2 w-48 z-10 group-hover:block"
+                onMouseLeave={() => setShowDropdown(false)}
+              >
+                <Link
+                  href="/contact-us"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-highlight"
+                >
+                  Contact Us
+                </Link>
+                <Link
+                  href="/get-listed"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-highlight"
+                >
+                  Get Listed
+                </Link>
+              </div>
+            )}
           </div>
+
           {/* Dark Mode Toggle */}
           <button
             onClick={toggleTheme}
@@ -161,13 +178,15 @@ export default function Header() {
                 key={item.name}
                 className={`whitespace-nowrap h-full px-3 py-5  transition-colors duration-200 ${
                   isActive
-                    ? "border-b-4 border-highlight"
-                    : "hover:border-accent hover:border-b-4"
+                    ? "border-b-2 border-highlight"
+                    : "hover:border-highlight hover:border-b-2"
                 }`}
               >
                 <Link
                   href={item.href}
-                  className="text-xs sm:text-base font-semibold text-foreground hover:text-accent flex items-center"
+                  className={`text-xs sm:text-base font-semibold ${
+                    isActive ? "text-highlight" : "text-foreground"
+                  } hover:text-highlight flex items-center`}
                 >
                   {item.icon}
                   <span className="ml-2">{item.name.toUpperCase()}</span>

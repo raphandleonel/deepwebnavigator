@@ -81,6 +81,36 @@ export default function PostPage({
     })),
   };
 
+  const tags = post.tags?.map((tag) => tag.title).join(", ");
+
+  const schemaTags = post.tags
+    ? post.tags.map((tag) => ({
+        "@type": "ListItem",
+        position: post.tags ? post.tags.indexOf(tag) + 1 : 1,
+        name: tag.title,
+        item: `/tags/${tag.slug.current}`, // You can link to your tag page
+      }))
+    : [];
+
+  const postSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    image: urlFor(post.image ?? "").url(),
+    author: {
+      "@type": "Person",
+      name: post.author.name,
+    },
+    datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
+    description: post.excerpt,
+    keywords: tags,
+    mainEntityOfPage: `https://darkwebnavigator.com/${post.slug}`,
+    breadcrumb: breadcrumbSchema,
+    articleSection: post.category?.title,
+    tag: schemaTags,
+  };
+
   return (
     <div className="m-auto pb-10 px-4 sm:px-8 max-w-[1170px]">
       <Head>
@@ -93,9 +123,18 @@ export default function PostPage({
         )}
         <meta property="og:url" content={`/posts/${post.slug}`} />
         <meta property="og:type" content="article" />
+        {tags && <meta name="keywords" content={tags} />}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(postSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(breadcrumbSchema),
+          }}
         />
       </Head>
 
