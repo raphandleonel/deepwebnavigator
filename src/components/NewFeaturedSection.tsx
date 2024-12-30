@@ -31,7 +31,7 @@ const NewFeaturedSection = ({ posts }: { posts: Post[] }) => {
                 href="/category/top-dark-web-markets"
                 className="text-light hover:underline"
               >
-                Top Dark Web Markets
+                Featured Dark Web Markets
               </Link>
             </h3>
             <ul className="list-unstyled">
