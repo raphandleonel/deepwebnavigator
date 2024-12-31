@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface GetListedFormData {
   name: string;
@@ -9,6 +9,7 @@ interface GetListedFormData {
   cryptocurrencies: string[];
   description: string;
   jabberAddress: string;
+  mathAnswer: string; // User's answer to the math challenge
 }
 
 const useGetListedForm = () => {
@@ -21,11 +22,36 @@ const useGetListedForm = () => {
     cryptocurrencies: [],
     description: "",
     jabberAddress: "",
+    mathAnswer: "", // User's math answer
   });
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
   const [error, setError] = useState<string | null>(null);
+
+  const [mathChallenge, setMathChallenge] = useState<{
+    question: string;
+    answer: number;
+  }>({
+    question: "",
+    answer: 0,
+  });
+
+  // Generate a random math problem
+  // Generate a random math problem
+  const generateMathChallenge = () => {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    const answer = num1 + num2;
+
+    setMathChallenge({
+      question: `${num1} + ${num2} = ?`,
+      answer,
+    });
+  };
+  useEffect(() => {
+    generateMathChallenge(); // Generate a math challenge when the component mounts
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -91,7 +117,12 @@ const useGetListedForm = () => {
     e.preventDefault();
     setStatus("loading");
     setError(null);
-
+    // Validate math challenge answer before submission
+    if (parseInt(formData.mathAnswer) !== mathChallenge.answer) {
+      setError("Incorrect math answer. Please try again.");
+      setStatus("error");
+      return;
+    }
     const formDataToSubmit = new FormData();
 
     // Append text fields directly
@@ -129,7 +160,9 @@ const useGetListedForm = () => {
           cryptocurrencies: [],
           description: "",
           jabberAddress: "",
+          mathAnswer: "",
         });
+        generateMathChallenge(); // Regenerate a new math challenge after submission
       } else {
         throw new Error("Error submitting form");
       }
@@ -144,6 +177,7 @@ const useGetListedForm = () => {
     formData,
     status,
     error,
+    mathChallenge,
     handleChange,
     handleSelectChange,
     handleFileChange,

@@ -17,6 +17,7 @@ const GetListedPage = () => {
     addMirrorLink,
     removeMirrorLink,
     handleSubmit,
+    mathChallenge,
   } = useGetListedForm();
 
   return (
@@ -175,7 +176,18 @@ const GetListedPage = () => {
             className="w-full p-2 border border-gray-300 rounded"
           ></textarea>
         </div>
-
+        <div className="mb-4">
+          <label className="block">{mathChallenge.question}</label>
+          <input
+            type="number"
+            name="mathAnswer"
+            value={formData.mathAnswer}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+          {error && <div className="text-red-600 mt-2">{error}</div>}
+        </div>
         <div>
           <button
             type="submit"
