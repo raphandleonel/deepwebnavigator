@@ -21,7 +21,7 @@ const GetListedPage = () => {
   } = useGetListedForm();
 
   return (
-    <div className="container mx-auto p-6 max-w-3xl border bg-white text-gray-900 rounded-lg">
+    <div className="py-12 sm:px-6 lg:px-8 mx-auto p-6 max-w-3xl border bg-white text-gray-900 rounded-lg">
       <h1 className="text-2xl font-bold mb-4">
         Get Your Market, Shop or Forum Listed
       </h1>
@@ -172,6 +172,8 @@ const GetListedPage = () => {
             id="description"
             value={formData.description}
             onChange={handleChange}
+            minLength={50}
+            maxLength={1000}
             required
             className="w-full p-2 border border-gray-300 rounded"
           ></textarea>

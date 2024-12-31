@@ -11,6 +11,7 @@ export default function ContactUsPage() {
     isCopied,
     handleCopy,
     copiedIndex,
+    mathChallenge,
   } = useContactForm();
 
   return (
@@ -25,7 +26,7 @@ export default function ContactUsPage() {
           <div className="flex flex-col">
             <label
               htmlFor="email"
-              className="text-sm font-medium text-background"
+              className="text-lg font-medium text-background"
             >
               Jabber Address
             </label>
@@ -44,7 +45,7 @@ export default function ContactUsPage() {
           <div className="flex flex-col">
             <label
               htmlFor="message"
-              className="text-sm font-medium text-background"
+              className="text-lg font-medium text-background"
             >
               Message
             </label>
@@ -56,6 +57,20 @@ export default function ContactUsPage() {
               onChange={handleChange}
               required
               className="text-gray-900 mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label className="block text-lg font-medium text-background">
+              {mathChallenge.question}
+            </label>
+            <input
+              type="number"
+              name="mathAnswer"
+              minLength={30}
+              value={formState.mathAnswer}
+              onChange={handleChange}
+              required
+              className="mt-2 p-3 border text-gray-900 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 

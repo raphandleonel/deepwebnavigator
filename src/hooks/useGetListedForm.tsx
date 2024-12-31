@@ -38,7 +38,6 @@ const useGetListedForm = () => {
   });
 
   // Generate a random math problem
-  // Generate a random math problem
   const generateMathChallenge = () => {
     const num1 = Math.floor(Math.random() * 10) + 1;
     const num2 = Math.floor(Math.random() * 10) + 1;
