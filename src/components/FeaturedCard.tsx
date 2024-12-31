@@ -2,7 +2,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { Post } from "@/interfaces";
-import { ArrowRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowRightIcon,
+  ChevronDownIcon,
+  ClipboardDocumentIcon,
+  CheckIcon,
+} from "@heroicons/react/24/outline";
+import { truncateUrl } from "@/utils/truncate";
 
 interface PostCardProps {
   post: Post;
@@ -76,13 +82,19 @@ const FeaturedCard: React.FC<PostCardProps> = ({
               {post.links.map((linkObj, index) => (
                 <div key={index} className="flex items-center space-x-2">
                   <span className="text-sm truncate w-60 text-highlight">
-                    {linkObj.url}
+                    {truncateUrl(linkObj.url)}
                   </span>
                   <button
                     onClick={() => copyToClipboard(linkObj.url, index)}
                     className="flex items-center space-x-1 text-sm bg-green-700 p-1 px-2 rounded-md text-center"
                   >
-                    <span>{copiedIndex === index ? "Copied" : "Copy"}</span>
+                    <span>
+                      {copiedIndex === index ? (
+                        <CheckIcon className="w-5 h-5" />
+                      ) : (
+                        <ClipboardDocumentIcon className="w-5 h-5" />
+                      )}
+                    </span>
                   </button>
                 </div>
               ))}

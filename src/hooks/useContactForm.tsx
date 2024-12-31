@@ -1,20 +1,19 @@
 import { useState } from "react";
 
 interface FormState {
-  name: string;
   email: string;
   message: string;
 }
 
 const useContactForm = () => {
   const [formState, setFormState] = useState<FormState>({
-    name: "",
     email: "",
     message: "",
   });
   const [status, setStatus] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isCopied, setIsCopied] = useState<boolean>(false);
+  const [copiedIndex, setCopyIndex] = useState<number>(0);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -28,7 +27,7 @@ const useContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setStatus(""); // Clear previous status
+    setStatus("");
 
     try {
       const response = await fetch("/api/contactUs", {
@@ -41,7 +40,7 @@ const useContactForm = () => {
 
       if (response.ok) {
         setStatus("Thank you! Your message has been sent.");
-        setFormState({ name: "", email: "", message: "" });
+        setFormState({ email: "", message: "" });
       } else {
         setStatus("Oops! Something went wrong. Please try again.");
       }
@@ -53,9 +52,10 @@ const useContactForm = () => {
     }
   };
 
-  const handleCopy = (link: string) => {
+  const handleCopy = (link: string, index: number) => {
     navigator.clipboard.writeText(link);
     setIsCopied(true);
+    setCopyIndex(index);
     setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
   };
 
@@ -67,6 +67,7 @@ const useContactForm = () => {
     isSubmitting,
     isCopied,
     handleCopy,
+    copiedIndex,
   };
 };
 

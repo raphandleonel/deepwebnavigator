@@ -6,12 +6,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { name, email, message } = req.body;
+    const { email, message } = req.body;
 
     try {
       const newSubmission = await client.create({
-        _type: "contactUsSubmission",
-        name,
+        _type: "contactUs",
         email,
         message,
         createdAt: new Date().toISOString(),
