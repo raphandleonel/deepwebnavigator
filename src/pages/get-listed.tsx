@@ -4,7 +4,6 @@ const cryptocurrenciesList = [
   { value: "ETH", label: "Ethereum (ETH)" },
   { value: "XMR", label: "Monero (XMR)" },
   { value: "LTC", label: "Litecoin (LTC)" },
-  { value: "BCH", label: "Bitcoin Cash (BCH)" },
 ];
 const GetListedPage = () => {
   const {
