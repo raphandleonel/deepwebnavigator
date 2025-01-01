@@ -56,8 +56,8 @@ const FeaturedCard: React.FC<PostCardProps> = ({
               <Image
                 src={`/images/logos/${currency.toLowerCase()}.png`}
                 alt={`${currency} logo`}
-                layout="fill"
-                objectFit="contain"
+                fill // Replaces layout="fill"
+                style={{ objectFit: "contain" }} // Replaces objectFit="contain"
                 priority
               />
             </div>

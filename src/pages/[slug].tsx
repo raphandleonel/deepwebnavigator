@@ -13,6 +13,8 @@ import Link from "next/link";
 import SectionLayout from "@/components/SectionLayout"; // Reusing the section layout for related posts
 import { useRouter } from "next/router";
 import { formateDate } from "@/utils/formatDate";
+import { useState } from "react";
+import { ClipboardDocumentIcon, CheckIcon } from "@heroicons/react/24/outline";
 
 const builder = imageUrlBuilder(client);
 
@@ -56,6 +58,9 @@ export default function PostPage({
   relatedPosts: Post[];
 }) {
   const router = useRouter();
+  const [copiedLinks, setCopiedLinks] = useState<{ [key: string]: boolean }>(
+    {}
+  );
 
   if (router.isFallback) {
     return <div>Loading…</div>;
@@ -110,9 +115,22 @@ export default function PostPage({
     articleSection: post.category?.title,
     tag: schemaTags,
   };
-
+  const handleCopy = (link: string, index: string) => {
+    navigator.clipboard.writeText(link).then(() => {
+      setCopiedLinks((prev) => ({
+        ...prev,
+        [index]: true,
+      }));
+      setTimeout(() => {
+        setCopiedLinks((prev) => ({
+          ...prev,
+          [index]: false,
+        }));
+      }, 2000); // Revert the icon back after 2 seconds
+    });
+  };
   return (
-    <div className="m-auto pb-10 px-4 sm:px-8 max-w-[1170px]">
+    <div className="m-auto pb-10 px-4 sm:px-8 max-w-[800px]">
       <Head>
         <title>{post.title}</title>
         <meta name="description" content={post.seoDescription} />
@@ -159,19 +177,22 @@ export default function PostPage({
               <span>{readTime}</span>
             </div>
           </div>
-
           {post.image && (
             <figure className="w-full mb-8">
-              <Image
-                src={urlFor(post.image).url()}
-                alt={post.title}
-                layout="responsive"
-                objectFit="cover"
-                width={800}
-                height={450}
-                loading="lazy"
-                className="rounded-lg"
-              />
+              <div
+                className="relative w-full"
+                style={{ paddingBottom: "56.25%" }}
+              >
+                {/* 16:9 aspect ratio */}
+                <Image
+                  src={urlFor(post.image).url()}
+                  alt={post.title}
+                  fill // Replaces layout="responsive"
+                  style={{ objectFit: "cover" }} // Replaces objectFit="cover"
+                  loading="lazy"
+                  className="rounded-lg"
+                />
+              </div>
             </figure>
           )}
 
@@ -180,6 +201,7 @@ export default function PostPage({
               value={post.body}
               components={{
                 block: {
+                  // Apply theme classes to headings (h1, h2, h3, etc.)
                   h1: ({ children }) => (
                     <h1 className="text-foreground font-heading">{children}</h1>
                   ),
@@ -192,13 +214,72 @@ export default function PostPage({
                   h4: ({ children }) => (
                     <h4 className="text-foreground font-heading">{children}</h4>
                   ),
+                  p: ({ children }) => (
+                    <p className="text-foreground">{children}</p> // Apply text color for paragraphs
+                  ),
+                  ul: ({ children }) => (
+                    <ul className="list-disc pl-5 text-foreground">
+                      {children}
+                    </ul> // Apply list styles
+                  ),
+                  ol: ({ children }) => (
+                    <ol className="list-decimal pl-5 text-foreground">
+                      {children}
+                    </ol> // Apply list styles
+                  ),
+                  li: ({ children }) => (
+                    <li className="text-foreground">{children}</li> // Apply text color for list items
+                  ),
                 },
                 marks: {
                   strong: ({ children }) => (
                     <strong className="font-bold text-foreground">
                       {children}
-                    </strong>
+                    </strong> // Ensure strong text is bold and has theme color
                   ),
+                  em: ({ children }) => (
+                    <em className="italic text-foreground">{children}</em> // Apply italic and text color for em
+                  ),
+                  link: ({ children, value }) => (
+                    <div className="flex items-center space-x-2 overflow-hidden w-full">
+                      <a
+                        href={value.href}
+                        className="text-blue-600 hover:text-blue-800 truncate max-w-[calc(100%-3rem)]"
+                      >
+                        {children}
+                      </a>
+                      <button
+                        onClick={() => handleCopy(value.href, value.href)}
+                        className="text-blue-600 hover:text-blue-800"
+                      >
+                        {copiedLinks[value.href] ? (
+                          <CheckIcon className="w-5 h-5" />
+                        ) : (
+                          <ClipboardDocumentIcon className="w-5 h-5" />
+                        )}
+                      </button>
+                    </div>
+                  ),
+                },
+                types: {
+                  // Custom component for images
+                  image: ({ value }) => {
+                    return (
+                      <div
+                        className="relative w-full mb-8"
+                        style={{ paddingBottom: "56.25%" }}
+                      >
+                        <Image
+                          src={urlFor(value).url()}
+                          alt={value.alt || "Image"}
+                          fill
+                          style={{ objectFit: "cover" }}
+                          loading="lazy"
+                          className="rounded-lg border border-foreground"
+                        />
+                      </div>
+                    );
+                  },
                 },
               }}
             />
@@ -208,12 +289,16 @@ export default function PostPage({
 
       {/* Related Posts Section */}
       {relatedPosts.length > 0 && (
-        <SectionLayout title="Related Posts" posts={relatedPosts} />
+        <SectionLayout title="Related Posts" posts={relatedPosts} columns={3} />
       )}
 
       {/* Latest Posts section */}
       {latestPost && latestPost.length > 0 && (
-        <SectionLayout title="Latest Posts" posts={latestPost.slice(1, 5)} />
+        <SectionLayout
+          title="Latest Posts"
+          posts={latestPost.slice(1, 5)}
+          columns={2}
+        />
       )}
     </div>
   );

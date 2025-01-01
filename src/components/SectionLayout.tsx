@@ -2,24 +2,23 @@ import Link from "next/link";
 import PostCard from "@/components/PostCard";
 import { SectionLayoutProps } from "@/interfaces";
 
+interface SectionLayoutPropsExtended extends SectionLayoutProps {
+  columns?: 1 | 2 | 3 | 4; // Optional prop to define grid columns
+}
+
 export default function SectionLayout({
   title,
   seeAllLink,
   posts,
   isLastSection = false,
-}: SectionLayoutProps) {
+  columns = 4, // Default to 4 columns
+}: SectionLayoutPropsExtended) {
   return (
     <section
       className="py-8 shadow-md px-4"
       style={{
         background: seeAllLink
-          ? `
-          linear-gradient(
-            to bottom,
-            var(--section-bg-start),
-            var(--section-bg-end)
-          )
-        `
+          ? `linear-gradient(to bottom, var(--section-bg-start), var(--section-bg-end))`
           : "",
       }}
     >
@@ -48,7 +47,9 @@ export default function SectionLayout({
       </div>
 
       {/* Grid Layout for Posts */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      <div
+        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-${columns} gap-4`}
+      >
         {posts.map((post) => (
           <PostCard
             key={post.slug.current}

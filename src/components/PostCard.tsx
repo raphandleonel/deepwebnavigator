@@ -42,14 +42,16 @@ export default function PostCard({
         className={`relative overflow-hidden ${imageWrapperStyles} rounded-lg`}
       >
         {post.image ? (
-          <Image
-            src={urlFor(post.image).url()}
-            alt={post.title}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-lg transform hover:scale-110 transition-transform duration-500 ease-out"
-            loading="lazy"
-          />
+          <Link href={`/${post.slug.current}`}>
+            <Image
+              src={urlFor(post.image).url()}
+              alt={post.title}
+              fill
+              style={{ objectFit: "cover" }}
+              className="rounded-lg transform hover:scale-110 transition-transform duration-500 ease-out"
+              loading="lazy"
+            />
+          </Link>
         ) : (
           <div className="flex items-center justify-center w-full h-full bg-gray-800 text-gray-400 rounded-lg">
             No Image Available

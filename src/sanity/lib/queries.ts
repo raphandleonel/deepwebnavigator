@@ -1,19 +1,40 @@
 import { defineQuery } from "next-sanity";
 
 export const HOMEPAGE_QUERY = defineQuery(`
-*[_type == "post" && !(category->slug.current in ["darknet-vendors-shop", "deep-web-forums", "top-dark-web-markets"])] | order(publishedAt desc) [0...8] {
-  title,
-  slug,
-  publishedAt,
-  category-> { title, slug },
-  image,
-  excerpt,
-  author-> {
-    name,
+  *[_type == "post" && (isFeatured == false || !defined(isFeatured)) && !(category->slug.current in ["darknet-vendors-shop", "deep-web-forums", "top-dark-web-markets"])] 
+  | order(publishedAt desc) 
+  [0...8] {
+    title,
     slug,
-    image
+    publishedAt,
+    category-> { title, slug },
+    image,
+    excerpt,
+    author-> {
+      name,
+      slug,
+      image
+    }
   }
-}`);
+`);
+
+export const FEATURED_POSTS_QUERY = defineQuery(`
+  *[_type == "post" && isFeatured == true] 
+  | order(publishedAt desc) 
+  [0...8] {
+    title,
+    slug,
+    publishedAt,
+    category-> { title, slug },
+    image,
+    excerpt,
+    author-> {
+      name,
+      slug,
+      image
+    }
+  }
+`);
 
 export const POST_QUERY =
   defineQuery(`*[_type == "post" && slug.current == $slug][0] {
