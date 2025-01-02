@@ -9,12 +9,14 @@ interface PostCardProps {
   post: Post;
   layout?: "vertical" | "horizontal"; // Toggle layout
   size?: "small" | "medium" | "large"; // Card size
+  noBorder?: boolean;
 }
 
 export default function PostCard({
   post,
   layout = "vertical",
   size = "medium",
+  noBorder = false,
 }: PostCardProps) {
   const sizeStyles = {
     small: "h-16 sm:h-20",
@@ -34,7 +36,7 @@ export default function PostCard({
       className={`bg-background p-3 sm:p-4 m-2 flex ${
         layout === "horizontal"
           ? "flex-row-reverse border-t border-gray-700 gap-2"
-          : "flex-col border border-gray-700 rounded-lg shadow-md"
+          : `flex-col ${noBorder ? "border-t border-gray-700" : "border border-gray-700 rounded-lg shadow-md"}`
       } max-h-max`}
     >
       {/* Image Section */}

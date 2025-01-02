@@ -46,6 +46,7 @@ export const POST_QUERY =
   seoTitle,
   seoDescription,
   excerpt,
+  readTime,
   "tags": tags[]-> { title, slug },
   author-> {
     name,
