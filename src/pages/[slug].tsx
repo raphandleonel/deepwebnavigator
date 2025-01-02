@@ -159,7 +159,7 @@ export default function PostPage({
         />
       </Head>
       <section className="flex flex-wrap px-4">
-        <div className="lg:w-3/4 w-full lg:pr-16">
+        <div className="lg:w-3/5 w-full lg:pr-8">
           {/* Main Content */}
           <div className="lg:w-full">
             <div className="text-center mb-8">
@@ -335,7 +335,7 @@ export default function PostPage({
             </div>
           </div>
         </div>
-        <div className="lg:w-1/4 w-full lg:mt-[25vh]">
+        <div className="lg:w-2/5 w-full lg:mt-[25vh] lg:p-16">
           {/* Related Posts Section */}
           {latestPost && relatedPosts.length === 0 && (
             <div className="mb-8 mt-8">
