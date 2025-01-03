@@ -68,11 +68,15 @@ const useGetListedForm = () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     const { name, value, checked } = e.target;
-    console.log({ name, value, checked });
     setFormData((prevData) => {
-      const updatedValues = checked
-        ? [...prevData.cryptocurrencies, value]
-        : prevData.cryptocurrencies.filter((currency) => currency !== value);
+      const updatedValues =
+        name === "type"
+          ? value
+          : checked
+            ? [...prevData.cryptocurrencies, value]
+            : prevData.cryptocurrencies.filter(
+                (currency) => currency !== value
+              );
 
       return { ...prevData, [name]: updatedValues };
     });

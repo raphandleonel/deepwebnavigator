@@ -21,7 +21,6 @@ const GetListedPage = () => {
     handleSubmit,
     mathChallenge,
   } = useGetListedForm();
-
   return (
     <div className="py-12 sm:px-6 lg:px-8 mx-auto p-6 max-w-3xl bg-background text-foreground rounded-lg">
       <h1 className="text-2xl font-bold mb-4">
@@ -68,7 +67,7 @@ const GetListedPage = () => {
                 onChange={(e) => handleMirrorLinkChange(e, index)}
                 required
                 placeholder="readytofatroptsdj6io7l3xptbet6o48fv7jicoxknyazubrad.onion"
-                className="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="mt-2 w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
               {formData.mirrorLinks.length > 1 && (
                 <button
@@ -98,7 +97,7 @@ const GetListedPage = () => {
             value={formData.type}
             onChange={handleSelectChange}
             required
-            className="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="mt-2 w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="market">Market</option>
             <option value="shop">Shop</option>
@@ -119,7 +118,7 @@ const GetListedPage = () => {
               value={formData.pgpKeyLink}
               onChange={handleChange}
               placeholder="dreadytofatroxxio7l3xptbet6onoxxyv7jicoxknyazubrad.onion/pgp.txt"
-              className="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="mt-2 w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
         )}
@@ -171,7 +170,7 @@ const GetListedPage = () => {
             onChange={handleChange}
             placeholder="username@jabber.de"
             required
-            className="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="mt-2 w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
@@ -188,7 +187,7 @@ const GetListedPage = () => {
             minLength={50}
             maxLength={1000}
             required
-            className="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="mt-2 w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           ></textarea>
         </div>
 
@@ -201,7 +200,7 @@ const GetListedPage = () => {
             value={formData.mathAnswer}
             onChange={handleChange}
             required
-            className="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="mt-2 w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
           {error && <div className="text-red-600 mt-2">{error}</div>}
         </div>

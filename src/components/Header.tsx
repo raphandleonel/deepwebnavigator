@@ -94,6 +94,7 @@ export default function Header() {
           <div
             className="relative group"
             onMouseEnter={() => setShowDropdown(true)}
+            onMouseLeave={() => setShowDropdown(false)} // Hide dropdown on mouse leave
           >
             {/* Button */}
             <button className="flex items-center text-sm font-semibold text-white bg-gray-600 hover:bg-gray-700 transition-all px-4 py-2 rounded-lg">
@@ -107,10 +108,7 @@ export default function Header() {
 
             {/* Dropdown Menu */}
             {showDropdown && (
-              <div
-                className="absolute right-0 mt-2 bg-white shadow-md rounded-md py-2 w-48 z-10 dark:bg-gray-700 dark:text-white"
-                onMouseLeave={() => setShowDropdown(false)}
-              >
+              <div className="absolute right-0 mt-2 bg-white shadow-md rounded-md py-2 w-48 z-10 dark:bg-gray-700 dark:text-white">
                 <ul className="text-sm text-gray-700 dark:text-gray-200">
                   <li>
                     <Link
@@ -139,12 +137,12 @@ export default function Header() {
             aria-label="Toggle dark mode"
             className="flex items-center text-sm space-x-2 focus:outline-none"
           >
-            <span className="hidden lg:block">
+            <span className="hidden">
               {resolvedTheme === "dark" ? "Light" : "Dark"}
             </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="size-6"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
