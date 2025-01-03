@@ -12,6 +12,7 @@ import {
   ChevronDownIcon, // Import Chevron Down Icon from Heroicons
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
+import SubscribeModal from "./SubscribeModal";
 
 export default function Header() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -86,35 +87,48 @@ export default function Header() {
         </Link>
 
         <div className="items-center space-x-4 flex">
+          {/* Subscribe Button */}
+          <SubscribeModal />
+
           {/* Support Dropdown */}
           <div
-            className="relative group" // Wrap the button and dropdown in a group for hover behavior
-            onMouseEnter={() => setShowDropdown(true)} // Show dropdown on hover
+            className="relative group"
+            onMouseEnter={() => setShowDropdown(true)}
           >
-            <button className="flex items-center text-sm font-semibold">
+            {/* Button */}
+            <button className="flex items-center text-sm font-semibold text-white bg-gray-600 hover:bg-gray-700 transition-all px-4 py-2 rounded-lg">
               Support
               <ChevronDownIcon
-                className={`h-4 w-4 ml-2 transition-transform ${showDropdown ? "rotate-180" : ""}`}
+                className={`h-4 w-4 ml-2 transition-transform ${
+                  showDropdown ? "rotate-180" : ""
+                }`}
               />
             </button>
 
+            {/* Dropdown Menu */}
             {showDropdown && (
               <div
-                className="absolute right-0 mt-2 bg-white shadow-md rounded-md py-2 w-48 z-10 group-hover:block"
+                className="absolute right-0 mt-2 bg-white shadow-md rounded-md py-2 w-48 z-10 dark:bg-gray-700 dark:text-white"
                 onMouseLeave={() => setShowDropdown(false)}
               >
-                <Link
-                  href="/contact-us"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-highlight"
-                >
-                  Contact Us
-                </Link>
-                <Link
-                  href="/get-listed"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-highlight"
-                >
-                  Get Listed
-                </Link>
+                <ul className="text-sm text-gray-700 dark:text-gray-200">
+                  <li>
+                    <Link
+                      href="/contact-us"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Contact Us
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/get-listed"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Get Listed
+                    </Link>
+                  </li>
+                </ul>
               </div>
             )}
           </div>
@@ -125,7 +139,9 @@ export default function Header() {
             aria-label="Toggle dark mode"
             className="flex items-center text-sm space-x-2 focus:outline-none"
           >
-            <span>{resolvedTheme === "dark" ? "Light" : "Dark"}</span>
+            <span className="hidden lg:block">
+              {resolvedTheme === "dark" ? "Light" : "Dark"}
+            </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
