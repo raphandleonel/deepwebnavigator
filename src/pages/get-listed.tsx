@@ -1,10 +1,12 @@
-import useGetListedForm from "@/hooks/useGetListedForm"; // Import the custom hook
+import useGetListedForm from "@/hooks/useGetListedForm"; // Importing our custom hook
+
 const cryptocurrenciesList = [
   { value: "BTC", label: "Bitcoin (BTC)" },
   { value: "ETH", label: "Ethereum (ETH)" },
   { value: "XMR", label: "Monero (XMR)" },
   { value: "LTC", label: "Litecoin (LTC)" },
 ];
+
 const GetListedPage = () => {
   const {
     formData,
@@ -21,11 +23,13 @@ const GetListedPage = () => {
   } = useGetListedForm();
 
   return (
-    <div className="py-12 sm:px-6 lg:px-8 mx-auto p-6 max-w-3xl border bg-white text-gray-900 rounded-lg">
+    <div className="py-12 sm:px-6 lg:px-8 mx-auto p-6 max-w-3xl bg-background text-foreground rounded-lg">
       <h1 className="text-2xl font-bold mb-4">
         Get Your Market, Shop or Forum Listed
       </h1>
-      <form onSubmit={handleSubmit}>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Status Message */}
         {status === "error" && <div className="text-red-600">{error}</div>}
         {status === "success" && (
           <div className="text-green-600">
@@ -33,22 +37,24 @@ const GetListedPage = () => {
           </div>
         )}
 
+        {/* Name Field */}
         <div className="mb-4">
-          <label htmlFor="name" className="block">
+          <label htmlFor="name" className="block text-sm font-medium">
             Name of Market, Shop, or Forum
           </label>
           <input
             type="text"
             id="name"
             name="name"
-            placeholder="Tor Market"
             value={formData.name}
+            placeholder="Tor Market"
             onChange={handleChange}
             required
-            className="w-full p-2 border border-gray-300 rounded"
+            className="mt-2 p-3 border border-gray-300 rounded-lg w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
+        {/* Mirror Links Field */}
         <div className="mb-4">
           <label htmlFor="mirrorLinks" className="block">
             Mirror Links
@@ -58,11 +64,11 @@ const GetListedPage = () => {
               <input
                 type="url"
                 name="mirrorLinks"
-                placeholder="readytofatroptsdj6io7l3xptbet6o48fv7jicoxknyazubrad.onion"
                 value={link}
                 onChange={(e) => handleMirrorLinkChange(e, index)}
                 required
-                className="w-full p-2 border border-gray-300 rounded"
+                placeholder="readytofatroptsdj6io7l3xptbet6o48fv7jicoxknyazubrad.onion"
+                className="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
               {formData.mirrorLinks.length > 1 && (
                 <button
@@ -84,6 +90,7 @@ const GetListedPage = () => {
           </button>
         </div>
 
+        {/* Type Field */}
         <div className="mb-4">
           <label className="block">Type</label>
           <select
@@ -91,7 +98,7 @@ const GetListedPage = () => {
             value={formData.type}
             onChange={handleSelectChange}
             required
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="market">Market</option>
             <option value="shop">Shop</option>
@@ -99,6 +106,7 @@ const GetListedPage = () => {
           </select>
         </div>
 
+        {/* PGP Key Link Field (for Market only) */}
         {formData.type === "market" && (
           <div className="mb-4">
             <label htmlFor="pgpKeyLink" className="block">
@@ -107,15 +115,16 @@ const GetListedPage = () => {
             <input
               type="url"
               id="pgpKeyLink"
-              placeholder="dreadytofatroxxio7l3xptbet6onoxxyv7jicoxknyazubrad.onion/pgp.txt"
               name="pgpKeyLink"
               value={formData.pgpKeyLink}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              placeholder="dreadytofatroxxio7l3xptbet6onoxxyv7jicoxknyazubrad.onion/pgp.txt"
+              className="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
         )}
 
+        {/* Banner Upload Field */}
         <div className="mb-4">
           <label htmlFor="banner" className="block">
             Banner (1024x512, Max 1MB)
@@ -125,10 +134,11 @@ const GetListedPage = () => {
             name="banner"
             onChange={handleFileChange}
             accept="image/*"
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
+        {/* Cryptocurrencies Field */}
         <div className="mb-4">
           <label className="block">Cryptocurrencies Accepted</label>
           <div className="space-y-2">
@@ -147,6 +157,8 @@ const GetListedPage = () => {
             ))}
           </div>
         </div>
+
+        {/* Jabber Address Field */}
         <div className="mb-4">
           <label htmlFor="jabberAddress" className="block">
             Jabber Address
@@ -155,14 +167,15 @@ const GetListedPage = () => {
             type="text"
             name="jabberAddress"
             id="jabberAddress"
-            placeholder="username@jabber.de"
             value={formData.jabberAddress}
             onChange={handleChange}
+            placeholder="username@jabber.de"
             required
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
+        {/* Description Field */}
         <div className="mb-4">
           <label htmlFor="description" className="block">
             Description
@@ -175,9 +188,11 @@ const GetListedPage = () => {
             minLength={50}
             maxLength={1000}
             required
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           ></textarea>
         </div>
+
+        {/* Math Challenge */}
         <div className="mb-4">
           <label className="block">{mathChallenge.question}</label>
           <input
@@ -186,15 +201,17 @@ const GetListedPage = () => {
             value={formData.mathAnswer}
             onChange={handleChange}
             required
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
           {error && <div className="text-red-600 mt-2">{error}</div>}
         </div>
+
+        {/* Submit Button */}
         <div>
           <button
             type="submit"
             disabled={status === "loading"}
-            className={`w-full p-3 bg-blue-600 text-white rounded ${status === "loading" ? "opacity-50" : ""}`}
+            className={`w-full p-3 bg-blue-600 text-white rounded-lg ${status === "loading" ? "opacity-50" : ""}`}
           >
             {status === "loading" ? "Submitting..." : "Submit Application"}
           </button>

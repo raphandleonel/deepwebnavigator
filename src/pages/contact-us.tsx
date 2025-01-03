@@ -15,18 +15,17 @@ export default function ContactUsPage() {
   } = useContactForm();
 
   return (
-    <div className="min-h-screen bg-background py-12 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto bg-foreground rounded-lg shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-center text-background mb-6">
-          Contact Us
-        </h2>
+    <div className="min-h-screen py-12 sm:px-6 lg:px-8 bg-background text-foreground">
+      <div className="max-w-2xl mx-auto rounded-lg shadow-lg p-8">
+        <h2 className="text-3xl font-bold text-center mb-6">Contact Us</h2>
 
         {/* Contact Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="flex flex-col">
+          {/* Jabber Address Field */}
+          <div className="mb-5">
             <label
               htmlFor="email"
-              className="text-lg font-medium text-background"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Jabber Address
             </label>
@@ -38,14 +37,15 @@ export default function ContactUsPage() {
               placeholder="username@jab.de"
               onChange={handleChange}
               required
-              className="mt-2 p-3 border text-gray-900 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="shadow-sm bg-gray-50 dark:bg-gray-700 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500"
             />
           </div>
 
-          <div className="flex flex-col">
+          {/* Message Field */}
+          <div className="mb-5">
             <label
               htmlFor="message"
-              className="text-lg font-medium text-background"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Message
             </label>
@@ -56,24 +56,26 @@ export default function ContactUsPage() {
               value={formState.message}
               onChange={handleChange}
               required
-              className="text-gray-900 mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="text-gray-900 dark:text-white mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-500"
             />
           </div>
-          <div className="flex flex-col">
-            <label className="block text-lg font-medium text-background">
+
+          {/* Math Challenge */}
+          <div className="mb-5">
+            <label className="block text-lg font-medium text-gray-900 dark:text-white">
               {mathChallenge.question}
             </label>
             <input
               type="number"
               name="mathAnswer"
-              minLength={30}
               value={formState.mathAnswer}
               onChange={handleChange}
               required
-              className="mt-2 p-3 border text-gray-900 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="mt-2 p-3 border text-gray-900 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500"
             />
           </div>
 
+          {/* Submit Button */}
           <div className="text-center">
             <button
               type="submit"
@@ -100,9 +102,7 @@ export default function ContactUsPage() {
 
         {/* Market Links Section */}
         <div className="mt-8 space-y-4">
-          <h3 className="text-xl font-semibold text-background">
-            Useful Links
-          </h3>
+          <h3 className="text-xl font-semibold">Useful Links</h3>
           <ul className="space-y-2">
             {[
               "dreadytofatroptsdj6io7l3xptbet6onoyno2yv7jicoxknyazubrad.onion",
