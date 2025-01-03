@@ -3,10 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 
 const socialLinks = [
-  {
-    href: "https://twitter.com/DarkWebnavigator",
-    label: "Twitter",
-  },
+  // {
+  //   href: "https://twitter.com/DarkWebnavigator",
+  //   label: "Twitter",
+  // },
   // {
   //   href: "https://youtube.com/@DarkWebnavigator",
   //   label: "YouTube",
@@ -19,14 +19,14 @@ const socialLinks = [
     href: "https://www.telegram.com/@darkwebnavigator/",
     label: "Telegram",
   },
-  {
-    href: "https://www.instagram.com/@Darkwebnavigator/",
-    label: "Instagram",
-  },
-  {
-    href: "https://www.facebook.com/@Darkwebnavigator/",
-    label: "Facebook",
-  },
+  // {
+  //   href: "https://www.instagram.com/@Darkwebnavigator/",
+  //   label: "Instagram",
+  // },
+  // {
+  //   href: "https://www.facebook.com/@Darkwebnavigator/",
+  //   label: "Facebook",
+  // },
 ];
 
 const navLinks = [
