@@ -343,7 +343,12 @@ export default function PostPage({
                 Related Posts
               </h2>
               {latestPost.slice(0, 3).map((post, index) => (
-                <PostCard key={index} post={post} noBorder={true} />
+                <PostCard
+                  key={index}
+                  post={post}
+                  layout="horizontal"
+                  size="small"
+                />
               ))}
             </div>
           )}
@@ -355,12 +360,7 @@ export default function PostPage({
                 Latest Posts
               </h2>
               {latestPost.slice(0, 3).map((post, index) => (
-                <PostCard
-                  key={index}
-                  post={post}
-                  layout="horizontal"
-                  size="small"
-                />
+                <PostCard key={index} post={post} noBorder={true} />
               ))}
             </div>
           )}

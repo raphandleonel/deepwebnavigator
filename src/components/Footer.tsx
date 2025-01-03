@@ -40,7 +40,7 @@ const navLinks = [
 ];
 
 const supportLinks = [
-  { href: "/contact", label: "Contact Us" },
+  { href: "/contact-us", label: "Contact Us" },
   { href: "/get-listed", label: "Get Listed" },
 ];
 
