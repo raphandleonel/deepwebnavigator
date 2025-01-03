@@ -1,105 +1,147 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const socialLinks = [
   {
-    href: "https://twitter.com/DarkWebInformer",
+    href: "https://twitter.com/DarkWebnavigator",
     label: "Twitter",
-    icon: "X", // Text-based icon
-    ariaLabel: "Twitter",
+  },
+  // {
+  //   href: "https://youtube.com/@DarkWebnavigator",
+  //   label: "YouTube",
+  // },
+  // {
+  //   href: "https://www.linkedin.com/company/darkwebnavigator/",
+  //   label: "LinkedIn",
+  // },
+  {
+    href: "https://www.telegram.com/@darkwebnavigator/",
+    label: "Telegram",
   },
   {
-    href: "https://infosec.exchange/@DarkWebInformer",
-    label: "Mastodon",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        className="bi bi-mastodon text-white"
-        viewBox="0 0 16 16"
-      >
-        <path d="..." />
-      </svg>
-    ),
-    ariaLabel: "Mastodon",
+    href: "https://www.instagram.com/@Darkwebnavigator/",
+    label: "Instagram",
   },
   {
-    href: "https://youtube.com/@DarkWebInformer",
-    label: "YouTube",
-    icon: "YT",
-    ariaLabel: "YouTube",
-  },
-  {
-    href: "https://www.linkedin.com/company/darkwebinformer/",
-    label: "LinkedIn",
-    icon: "In",
-    ariaLabel: "LinkedIn",
-  },
-  {
-    href: "/rss",
-    label: "RSS",
-    icon: "RSS",
-    ariaLabel: "RSS",
+    href: "https://www.facebook.com/@Darkwebnavigator/",
+    label: "Facebook",
   },
 ];
 
 const navLinks = [
-  { href: "/canary", label: "Canary" },
-  { href: "/changelog", label: "Changelog" },
-  { href: "/donations", label: "Donations" },
-  { href: "/pgp", label: "PGP Key" },
-  { href: "/privacy-policy", label: "Privacy Policy" },
-  { href: "/stats", label: "Stats" },
-  { href: "/support", label: "Support" },
-  { href: "/terms-of-service", label: "Terms of Service" },
-  { href: "/transparency", label: "Transparency Report" },
+  { href: "/home", label: "Home" },
+  {
+    href: "/category/top-dark-web-markets",
+    label: "Featured Markets",
+  },
+  { href: "/category/deep-web-forums", label: "Forums" },
+  { href: "/category/darknet-vendors-shop", label: "Vendors Shop" },
+];
+
+const supportLinks = [
+  { href: "/contact", label: "Contact Us" },
+  { href: "/get-listed", label: "Get Listed" },
+];
+
+const topDarkWebMarkets = [
+  { href: "/anubis-market", label: "Anubis Market" },
+  { href: "/abacus-market", label: "Abacus Market" },
+  { href: "/drughub-market", label: "DrugHub Market" },
+  { href: "/archetyp-market", label: "Archetyp Market" },
 ];
 
 export default function Footer() {
   return (
-    <footer className="bg-secondary text-foreground py-6">
-      <div className="container mx-auto text-center space-y-6 max-w-screen-lg">
-        {/* Logo */}
+    <footer className="py-8 border-t border-gray-700">
+      <div className="px-8 py-3 container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+        {/* About Section */}
+        <div className="lg:col-span-2 lg:px-4">
+          <Image
+            src="/logo.png"
+            alt="Dark Web Navigator Logo"
+            width={60}
+            height={60}
+          />
+          <p className="text-sm text-gray-4 leading-6">
+            Darkwebnavigator is a resource hub for those seeking information on
+            navigating the Dark Web, including access to hidden websites,
+            darknet forums, and tools for private communication.
+          </p>
+        </div>
+
+        {/* Quick Links Section */}
         <div>
-          <h2 className="text-2xl font-bold text-accent">Dark Web Navigator</h2>
+          <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
+          <ul className="space-y-2">
+            {navLinks.map((l, index) => (
+              <li key={index}>
+                <Link href={l.href} className="hover:underline">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        {/* Social Media Links */}
-        <div className="flex justify-center gap-4">
-          {socialLinks.map(({ href, icon, ariaLabel }) => (
-            <a
-              key={href}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={ariaLabel}
-              className="p-2 bg-primary rounded-full hover:bg-accent transition-colors duration-200"
-            >
-              <span className="text-white">{icon}</span>
-            </a>
-          ))}
+        {/* Markets section */}
+        <div>
+          <h4 className="text-lg font-semibold mb-4">Top Dark Web Markets</h4>
+          <ul className="space-y-2">
+            {topDarkWebMarkets.map(
+              (l, index) =>
+                index < 4 && (
+                  <li key={index}>
+                    <Link href={l.href} className="hover:underline">
+                      {l.label}
+                    </Link>
+                  </li>
+                )
+            )}
+          </ul>
         </div>
 
-        {/* Navigation Links */}
-        <nav className="flex flex-wrap justify-center gap-4">
-          {navLinks.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className="text-sm font-medium hover:text-highlight transition-colors duration-200"
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Copyright */}
-        <div className="text-sm text-gray-400">
-          © {new Date().getFullYear()} Dark Web Navigator - Cyber Threat
-          Intelligence. All rights reserved.
+        {/* Support Section */}
+        <div>
+          <h4 className="text-lg font-semibold mb-4">Support</h4>
+          <ul className="space-y-2">
+            {supportLinks.map((l, index) => (
+              <li key={index}>
+                <Link href={l.href} className="hover:underline">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
+
+        {/* Social Media Section */}
+        <div>
+          <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
+          <div className="flex items-center space-x-1">
+            {socialLinks.map((platform) => (
+              <a
+                key={platform.label}
+                href={platform.href}
+                aria-label={`${platform.label} social link`}
+                className="p-2 rounded-full bg-gray-9 hover:bg-gray-7 transition"
+              >
+                <Image
+                  src={`/images/icons/${platform.label.toLowerCase()}.svg`}
+                  alt={platform.label}
+                  className="w-6 h-6"
+                  width={60}
+                  height={60}
+                />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 text-center text-sm text-highlight text-gray-5">
+        &copy; {new Date().getFullYear()} Dark Web Navigator. All rights
+        reserved.
       </div>
     </footer>
   );
