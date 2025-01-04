@@ -94,7 +94,7 @@ export default function Header() {
           <div
             className="relative group"
             onMouseEnter={() => setShowDropdown(true)}
-            onMouseLeave={() => setShowDropdown(false)} // Hide dropdown on mouse leave
+            // onMouseLeave={() => setShowDropdown(false)} // Hide dropdown on mouse leave
           >
             {/* Button */}
             <button className="flex items-center text-sm font-semibold text-white bg-gray-600 hover:bg-gray-700 transition-all px-4 py-2 rounded-lg">
@@ -108,7 +108,10 @@ export default function Header() {
 
             {/* Dropdown Menu */}
             {showDropdown && (
-              <div className="absolute right-0 mt-2 bg-white shadow-md rounded-md py-2 w-48 z-10 dark:bg-gray-700 dark:text-white">
+              <div
+                className="absolute right-0 mt-2 bg-white shadow-md rounded-md py-2 w-48 z-10 dark:bg-gray-700 dark:text-white"
+                onMouseLeave={() => setShowDropdown(false)}
+              >
                 <ul className="text-sm text-gray-700 dark:text-gray-200">
                   <li>
                     <Link
