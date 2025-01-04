@@ -362,7 +362,12 @@ export default function PostPage({
                 Latest Posts
               </h2>
               {latestPost.slice(0, 4).map((post, index) => (
-                <PostCard key={index} post={post} noBorder={true} />
+                <PostCard
+                  key={index}
+                  post={post}
+                  layout="horizontal"
+                  size="small"
+                />
               ))}
             </div>
           )}
