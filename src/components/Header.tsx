@@ -8,19 +8,95 @@ import {
   NewspaperIcon,
   UsersIcon,
   ShieldExclamationIcon,
+  Bars4Icon,
+  MoonIcon,
+  SunIcon,
   ShoppingBagIcon,
-  ChevronDownIcon, // Import Chevron Down Icon from Heroicons
+  ChevronDownIcon,
+  InformationCircleIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import SubscribeModal from "./SubscribeModal";
+// This is a mock function. Replace it with your actual data fetching logic from Sanity.
+const fetchCategories = async () => {
+  return [
+    {
+      title: "Insights",
+      slug: "insight",
+      icon: <InformationCircleIcon className="h-5 w-5" />,
+    },
+    {
+      title: "DDoS Attacks",
+      slug: "ddos-attacks",
+      icon: <InformationCircleIcon className="h-5 w-5" />,
+    },
+    {
+      title: "Leaks",
+      slug: "leaks",
+      icon: <InformationCircleIcon className="h-5 w-5" />,
+    },
+    {
+      title: "Vulnerabilities",
+      slug: "vulnerabilities",
+      icon: <AcademicCapIcon className="h-5 w-5" />,
+    },
+    {
+      title: "Arrests",
+      slug: "arrests",
+      icon: <InformationCircleIcon className="h-5 w-5" />,
+    },
+    {
+      title: "Technology",
+      slug: "technology",
+      icon: <InformationCircleIcon className="h-5 w-5" />,
+    },
+    {
+      title: "News",
+      slug: "news",
+      icon: <NewspaperIcon className="h-5 w-5" />,
+    },
+    {
+      title: "Dark Web Markets",
+      slug: "top-dark-web-markets",
+      icon: <ShieldExclamationIcon className="h-5 w-5" />,
+    },
+    {
+      title: "Forums",
+      slug: "deep-web-forums",
+      icon: <UsersIcon className="h-5 w-5" />,
+    },
+    {
+      title: "Guides",
+      slug: "guides",
+      icon: <InformationCircleIcon className="h-5 w-5" />,
+    },
+    {
+      title: "Darknet Vendors",
+      slug: "darknet-vendors-shop",
+      icon: <ShoppingBagIcon className="h-5 w-5" />,
+    },
+  ];
+};
+interface category {
+  title: string;
+  slug: string;
+  icon: JSX.Element;
+}
 
 export default function Header() {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false); // State to control dropdown visibility
+  const [showCategoriesDropdown, setShowCategoriesDropdown] = useState(false); // Dropdown state
+  const [categories, setCategories] = useState<category[]>([]);
   useEffect(() => {
     setMounted(true);
+    const loadCategories = async () => {
+      const data = await fetchCategories();
+      setCategories(data);
+    };
+    loadCategories();
   }, []);
 
   if (!mounted) return null;
@@ -57,10 +133,11 @@ export default function Header() {
       href: "/category/darknet-vendors-shop",
       icon: <ShoppingBagIcon className="h-5 w-5" />,
     },
+
     {
-      name: "Vulnerabilities",
-      href: "/category/vulnerabilities",
-      icon: <AcademicCapIcon className="h-5 w-5" />,
+      name: "Categories",
+      href: "#",
+      icon: <Bars4Icon className="h-5 w-5" />,
     },
   ];
 
@@ -150,35 +227,9 @@ export default function Header() {
               fill="currentColor"
             >
               {resolvedTheme === "dark" ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-                  />
-                </svg>
+                <SunIcon className="size-6" />
               ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
-                  />
-                </svg>
+                <MoonIcon className="size-6" />
               )}
             </svg>
           </button>
@@ -186,18 +237,26 @@ export default function Header() {
       </div>
 
       {/* Navigation */}
-      <nav className="border-y border-gray-700 bg-background">
+      <nav className="relative border-y border-gray-700 bg-background">
         <ul className="flex items-center lg:justify-evenly space-x-4 px-4 container mx-auto overflow-x-auto">
           {navigationItems.map((item) => {
             const isActive = router.asPath === item.href;
             return (
               <li
                 key={item.name}
-                className={`whitespace-nowrap h-full px-3 py-5  transition-colors duration-200 ${
+                className={`whitespace-nowrap h-full px-3 py-5 transition-colors duration-200 ${
                   isActive
                     ? "border-b-2 border-highlight"
                     : "hover:border-highlight hover:border-b-2"
                 }`}
+                onMouseEnter={() =>
+                  item.name === "Categories" &&
+                  setShowCategoriesDropdown(!showCategoriesDropdown)
+                }
+                onClick={() =>
+                  item.name === "Categories" &&
+                  setShowCategoriesDropdown(!showCategoriesDropdown)
+                }
               >
                 <Link
                   href={item.href}
@@ -207,7 +266,40 @@ export default function Header() {
                 >
                   {item.icon}
                   <span className="ml-2">{item.name.toUpperCase()}</span>
+                  {item.name === "Categories" && (
+                    <ChevronDownIcon
+                      className={`h-4 w-4 ml-2 transition-transform ${
+                        showCategoriesDropdown ? "rotate-180" : ""
+                      }`}
+                    />
+                  )}
                 </Link>
+                {item.name === "Categories" &&
+                  showCategoriesDropdown &&
+                  categories.length > 0 && (
+                    <div
+                      className="absolute top-full left-0 w-full mt-2 px-4"
+                      onMouseEnter={() => setShowCategoriesDropdown(true)}
+                      onMouseLeave={() => setShowCategoriesDropdown(false)}
+                    >
+                      <ul
+                        className="container sm:mx-auto bg-white shadow-md rounded-md py-4 z-10000 dark:bg-gray-700 dark:text-white grid grid-cols-3 gap-4 px-4"
+                        style={{ position: "relative", zIndex: 999999 }}
+                      >
+                        {categories.map((category) => (
+                          <li key={category.slug} className="flex items-center">
+                            <Link
+                              href={`/category/${category.slug}`}
+                              className="flex items-center px-4 py-2 text-base text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            >
+                              <span className="mr-2">{category.icon}</span>
+                              <span>{category.title}</span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
               </li>
             );
           })}
