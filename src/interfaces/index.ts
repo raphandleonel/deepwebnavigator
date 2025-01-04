@@ -50,6 +50,7 @@ export interface Post {
     name: string;
     url: string;
   }[];
+  isFeatured?: boolean;
 }
 
 export interface SectionLayoutProps {

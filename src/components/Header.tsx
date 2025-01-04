@@ -17,12 +17,12 @@ import {
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import SubscribeModal from "./SubscribeModal";
-// This is a mock function. Replace it with your actual data fetching logic from Sanity.
+
 const fetchCategories = async () => {
   return [
     {
       title: "Insights",
-      slug: "insight",
+      slug: "insights",
       icon: <InformationCircleIcon className="h-5 w-5" />,
     },
     {
@@ -174,7 +174,10 @@ export default function Header() {
             // onMouseLeave={() => setShowDropdown(false)} // Hide dropdown on mouse leave
           >
             {/* Button */}
-            <button className="flex items-center text-sm font-semibold text-white bg-gray-600 hover:bg-gray-700 transition-all px-4 py-2 rounded-lg">
+            <button
+              onClick={() => setShowDropdown(!showDropdown)}
+              className="flex items-center text-sm font-semibold text-white bg-gray-600 hover:bg-gray-700 transition-all px-4 py-2 rounded-lg"
+            >
               Support
               <ChevronDownIcon
                 className={`h-4 w-4 ml-2 transition-transform ${
@@ -283,17 +286,20 @@ export default function Header() {
                       onMouseLeave={() => setShowCategoriesDropdown(false)}
                     >
                       <ul
-                        className="container sm:mx-auto bg-white shadow-md rounded-md py-4 z-10000 dark:bg-gray-700 dark:text-white grid grid-cols-3 gap-4 px-4"
+                        className="container sm:mx-auto bg-white shadow-md rounded-md py-4 z-10000 dark:bg-gray-700 dark:text-white grid lg:grid-cols-3 grid-cols-2 gap-4 px-4"
                         style={{ position: "relative", zIndex: 999999 }}
                       >
                         {categories.map((category) => (
-                          <li key={category.slug} className="flex items-center">
+                          <li
+                            key={category.slug}
+                            className="flex items-center overflow-x-hidden"
+                          >
                             <Link
                               href={`/category/${category.slug}`}
-                              className="flex items-center px-4 py-2 text-base text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                              className="flex items-center px-4 py-2 text-sm sm:text-base text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                             >
                               <span className="mr-2">{category.icon}</span>
-                              <span>{category.title}</span>
+                              <span className="truncate">{category.title}</span>
                             </Link>
                           </li>
                         ))}

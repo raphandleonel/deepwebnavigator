@@ -4,7 +4,7 @@ import { PortableText } from "@portabletext/react";
 import imageUrlBuilder from "@sanity/image-url";
 import { Post } from "@/interfaces";
 import {
-  HOMEPAGE_QUERY,
+  LATEST_POSTS_QUERY,
   POST_QUERY,
   RELATED_POST_QUERY,
 } from "@/sanity/lib/queries";
@@ -29,14 +29,16 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
-  const post = await client.fetch(POST_QUERY, { slug: params.slug });
-  const latestPost = await client.fetch(HOMEPAGE_QUERY);
+  const post: Post = await client.fetch(POST_QUERY, { slug: params.slug });
+  const latestPost = await client.fetch(LATEST_POSTS_QUERY, {
+    slug: params.slug,
+  });
 
   // Fetch related posts based on the category
   let relatedPosts = [];
-  if (post?.category?._ref) {
+  if (post?.category?.slug?.current) {
     relatedPosts = await client.fetch(RELATED_POST_QUERY, {
-      categoryId: post.category._ref,
+      categorySlug: post.category.slug.current,
       slug: params.slug,
     });
   }
@@ -133,7 +135,7 @@ export default function PostPage({
     });
   };
   return (
-    <div className="m-auto pb-10 px-4 sm:px-8 max-w-[1200px]">
+    <div className="pb-10 px-2 sm:px-8 container mx-auto">
       <Head>
         <title>{post.title}</title>
         <meta name="description" content={post.seoDescription} />
@@ -159,17 +161,17 @@ export default function PostPage({
         />
       </Head>
       <section className="flex flex-wrap px-4">
-        <div className="lg:w-3/5 w-full lg:pr-8">
+        <div className="lg:w-2/3 w-full lg:px-32">
           {/* Main Content */}
           <div className="lg:w-full">
             <div className="text-center mb-8">
-              {/* {post.category && (
-              <Link href={`/category/${post.category.slug.current}`}>
-                <p className="inline-block bg-blue-600 text-white py-1 px-3 rounded-full text-sm">
-                  {post.category.title}
-                </p>
-              </Link>
-            )} */}
+              {post.category && (
+                <Link href={`/category/${post.category.slug.current}`}>
+                  <p className="inline-block bg-blue-600 text-white py-1 px-3 rounded-full text-sm">
+                    {post.category.title}
+                  </p>
+                </Link>
+              )}
               <h1 className="font-bold text-2xl sm:text-4xl text-foreground mt-4">
                 {post.title}
               </h1>
@@ -335,9 +337,9 @@ export default function PostPage({
             </div>
           </div>
         </div>
-        <div className="lg:w-2/5 w-full lg:mt-[25vh] lg:p-16">
+        <div className="lg:w-1/3 w-full lg:mt-[25vh] lg:px-16">
           {/* Related Posts Section */}
-          {latestPost && relatedPosts.length === 0 && (
+          {relatedPosts && relatedPosts.length > 0 && (
             <div className="mb-8 mt-8">
               <h2 className="text-2xl font-bold lg:text-center">
                 Related Posts
@@ -359,7 +361,7 @@ export default function PostPage({
               <h2 className="text-2xl font-bold lg:text-center">
                 Latest Posts
               </h2>
-              {latestPost.slice(0, 3).map((post, index) => (
+              {latestPost.slice(0, 4).map((post, index) => (
                 <PostCard key={index} post={post} noBorder={true} />
               ))}
             </div>

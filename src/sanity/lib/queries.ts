@@ -1,14 +1,33 @@
 import { defineQuery } from "next-sanity";
 
 export const HOMEPAGE_QUERY = defineQuery(`
-  *[_type == "post" && (isFeatured == false || !defined(isFeatured)) && !(category->slug.current in ["darknet-vendors-shop", "deep-web-forums", "top-dark-web-markets"])] 
+  *[_type == "post" && !(category->slug.current in ["darknet-vendors-shop", "deep-web-forums", "top-dark-web-markets"])] 
   | order(publishedAt desc) 
-  [0...8] {
+  [0...16] {
     title,
     slug,
     publishedAt,
     category-> { title, slug },
     image,
+    isFeatured,
+    excerpt,
+    author-> {
+      name,
+      slug,
+      image
+    }
+  }
+`);
+export const LATEST_POSTS_QUERY = defineQuery(`
+  *[_type == "post" && slug.current != $slug && !(category->slug.current in ["darknet-vendors-shop", "deep-web-forums", "top-dark-web-markets"])] 
+  | order(publishedAt desc) 
+  [0...4] {
+    title,
+    slug,
+    publishedAt,
+    category-> { title, slug },
+    image,
+    isFeatured,
     excerpt,
     author-> {
       name,
@@ -41,7 +60,7 @@ export const POST_QUERY =
   title,
   slug,
   publishedAt,
-  category-> { title, slug },
+  category-> { title, slug},
   image,
   seoTitle,
   seoDescription,
@@ -55,17 +74,18 @@ export const POST_QUERY =
   },
   body
 }`);
-export const RELATED_POST_QUERY =
-  defineQuery(`*[_type == "post" && category._ref == $categoryId && slug.current != $slug][0...5]{
-  title,
-  slug,
-  publishedAt,
-  image{ asset->{url,metadata {dimensions {width,height}
- }
-      }
+
+export const RELATED_POST_QUERY = defineQuery(`
+  *[_type == "post" && category->slug.current == $categorySlug && slug.current != $slug][0...4]{
+    title,
+    slug,
+    publishedAt,
+    "image": image {
+      "asset": asset->{url, metadata {dimensions {width, height}}}
     },
-        excerpt
-      }`);
+    excerpt
+  }
+`);
 
 export const AUTHOR_QUERY = defineQuery(`
   *[_type == "author" && slug.current == $slug][0] {

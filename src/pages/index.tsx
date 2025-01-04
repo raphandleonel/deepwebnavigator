@@ -42,8 +42,11 @@ export default function HomePage({
   marketForumVendors: Post[];
   featuredPosts_: Post[];
 }) {
-  const featuredPosts = [...featuredPosts_, ...posts].slice(0, 4); // Column 1
-  const latestPosts = posts.slice(1, 5); // Column 3 (smaller posts)
+  const featuredPosts = [
+    ...featuredPosts_,
+    ...posts.filter((p) => !p.isFeatured),
+  ].slice(0, 4);
+  const latestPosts = posts.slice(1, 5);
   const sections: SectionLayoutProps[] = [
     {
       title: "News",
@@ -51,12 +54,21 @@ export default function HomePage({
       posts: posts.filter((i) => i.category.slug.current === "news"),
     },
     {
-      title: "Vulnerabilities",
-      seeAllLink: "/category/vulnerabilities",
-      posts: posts.filter((i) => i.category.slug.current === "vulnerabilities"),
+      title: "Guides",
+      seeAllLink: "/category/guides",
+      posts: posts.filter((i) => i.category.slug.current === "guides"),
+    },
+    {
+      title: "Leaks",
+      seeAllLink: "/category/leaks",
+      posts: posts.filter((i) => i.category.slug.current === "leaks"),
+    },
+    {
+      title: "DDoS Attacks",
+      seeAllLink: "/category/ddos-attacks",
+      posts: posts.filter((i) => i.category.slug.current === "ddos-attacks"),
     },
   ];
-
   return (
     <>
       <Head>
@@ -114,14 +126,17 @@ export default function HomePage({
         marketForumVendors={marketForumVendors}
       />
       {/* Render Sections Dynamically */}
-      {sections.map((section, index) => (
-        <SectionLayout
-          key={index}
-          title={section.title}
-          seeAllLink={section.seeAllLink}
-          posts={section.posts}
-        />
-      ))}
+      {sections.map((section, index) => {
+        if (section.posts.length === 0) return null;
+        return (
+          <SectionLayout
+            key={index}
+            title={section.title}
+            seeAllLink={section.seeAllLink}
+            posts={section.posts}
+          />
+        );
+      })}
     </>
   );
 }

@@ -11,7 +11,7 @@ export default function SectionLayout({
   seeAllLink,
   posts,
   isLastSection = false,
-  columns = 4, // Default to 4 columns
+  columns = 4,
 }: SectionLayoutPropsExtended) {
   return (
     <section
@@ -48,9 +48,9 @@ export default function SectionLayout({
 
       {/* Grid Layout for Posts */}
       <div
-        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-${columns} gap-4`}
+        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-${columns} gap-1`}
       >
-        {posts.map((post) => (
+        {posts.slice(0, 4).map((post) => (
           <PostCard
             key={post.slug.current}
             post={post}

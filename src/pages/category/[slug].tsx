@@ -43,7 +43,7 @@ export default function CategoryPage({
         {keywords && <meta name="keywords" content={keywords} />}
       </Head>
       <h1 className="text-3xl font-bold mb-4">{category.title}</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1">
         {posts.map((post) => (
           <PostCard key={post.slug.current} post={post} size="medium" />
         ))}
