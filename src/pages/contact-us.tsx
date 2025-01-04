@@ -110,7 +110,7 @@ export default function ContactUsPage() {
             ].map((link, index) => (
               <li
                 key={index}
-                className="flex items-center justify-between bg-background p-4 rounded-lg shadow-sm"
+                className="flex items-center justify-between bg-background rounded-lg shadow-sm"
               >
                 <span className="truncate">{link}</span>
                 <button
