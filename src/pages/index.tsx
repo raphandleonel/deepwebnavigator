@@ -48,16 +48,12 @@ export default function HomePage({
   ].slice(0, 4);
   const latestPosts = posts.slice(1, 5);
   const sections: SectionLayoutProps[] = [
-    {
-      title: "News",
-      seeAllLink: "/category/news",
-      posts: posts.filter((i) => i.category.slug.current === "news"),
-    },
-    {
-      title: "Guides",
-      seeAllLink: "/category/guides",
-      posts: posts.filter((i) => i.category.slug.current === "guides"),
-    },
+    // {
+    //   title: "News",
+    //   seeAllLink: "/category/news",
+    //   posts: posts.filter((i) => i.category.slug.current === "news"),
+    // },
+
     {
       title: "Leaks",
       seeAllLink: "/category/leaks",
@@ -67,6 +63,16 @@ export default function HomePage({
       title: "DDoS Attacks",
       seeAllLink: "/category/ddos-attacks",
       posts: posts.filter((i) => i.category.slug.current === "ddos-attacks"),
+    },
+    {
+      title: "Guides",
+      seeAllLink: "/category/guides",
+      posts: posts.filter((i) => i.category.slug.current === "guides"),
+    },
+    {
+      title: "Data Breaches",
+      seeAllLink: "/category/data-breaches",
+      posts: posts.filter((i) => i.category.slug.current === "data-breaches"),
     },
   ];
   return (

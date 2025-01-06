@@ -21,7 +21,7 @@ import SubscribeModal from "./SubscribeModal";
 const fetchCategories = async () => {
   return [
     {
-      title: "Insights",
+      title: "Insight",
       slug: "insights",
       icon: <InformationCircleIcon className="h-5 w-5" />,
     },
@@ -61,19 +61,14 @@ const fetchCategories = async () => {
       icon: <ShieldExclamationIcon className="h-5 w-5" />,
     },
     {
-      title: "Forums",
-      slug: "deep-web-forums",
-      icon: <UsersIcon className="h-5 w-5" />,
+      title: "Data Breaches",
+      slug: "data-breaches",
+      icon: <ShieldExclamationIcon className="h-5 w-5" />,
     },
     {
       title: "Guides",
       slug: "guides",
       icon: <InformationCircleIcon className="h-5 w-5" />,
-    },
-    {
-      title: "Darknet Vendors",
-      slug: "darknet-vendors-shop",
-      icon: <ShoppingBagIcon className="h-5 w-5" />,
     },
   ];
 };
@@ -115,8 +110,8 @@ export default function Header() {
     },
     {
       name: "News",
-      href: "/category/news",
-      icon: <NewspaperIcon className="h-5 w-5" />,
+      href: "#",
+      icon: <Bars4Icon className="h-5 w-5" />,
     },
     {
       name: "Dark Web Markets",
@@ -132,12 +127,6 @@ export default function Header() {
       name: "Darknet Vendors",
       href: "/category/darknet-vendors-shop",
       icon: <ShoppingBagIcon className="h-5 w-5" />,
-    },
-
-    {
-      name: "Categories",
-      href: "#",
-      icon: <Bars4Icon className="h-5 w-5" />,
     },
   ];
 
@@ -253,11 +242,11 @@ export default function Header() {
                     : "hover:border-highlight hover:border-b-2"
                 }`}
                 onMouseEnter={() =>
-                  item.name === "Categories" &&
+                  item.name === "News" &&
                   setShowCategoriesDropdown(!showCategoriesDropdown)
                 }
                 onClick={() =>
-                  item.name === "Categories" &&
+                  item.name === "News" &&
                   setShowCategoriesDropdown(!showCategoriesDropdown)
                 }
               >
@@ -269,7 +258,7 @@ export default function Header() {
                 >
                   {item.icon}
                   <span className="ml-2">{item.name.toUpperCase()}</span>
-                  {item.name === "Categories" && (
+                  {item.name === "News" && (
                     <ChevronDownIcon
                       className={`h-4 w-4 ml-2 transition-transform ${
                         showCategoriesDropdown ? "rotate-180" : ""
@@ -277,7 +266,7 @@ export default function Header() {
                     />
                   )}
                 </Link>
-                {item.name === "Categories" &&
+                {item.name === "News" &&
                   showCategoriesDropdown &&
                   categories.length > 0 && (
                     <div
