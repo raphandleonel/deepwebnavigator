@@ -69,11 +69,6 @@ export default function HomePage({
       seeAllLink: "/category/guides",
       posts: posts.filter((i) => i.category.slug.current === "guides"),
     },
-    {
-      title: "Data Breaches",
-      seeAllLink: "/category/data-breaches",
-      posts: posts.filter((i) => i.category.slug.current === "data-breaches"),
-    },
   ];
   return (
     <>

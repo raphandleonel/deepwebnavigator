@@ -8,7 +8,6 @@ import {
   NewspaperIcon,
   UsersIcon,
   ShieldExclamationIcon,
-  Bars4Icon,
   MoonIcon,
   SunIcon,
   ShoppingBagIcon,
@@ -48,18 +47,9 @@ const fetchCategories = async () => {
     {
       title: "Technology",
       slug: "technology",
-      icon: <InformationCircleIcon className="h-5 w-5" />,
-    },
-    {
-      title: "News",
-      slug: "news",
       icon: <NewspaperIcon className="h-5 w-5" />,
     },
-    {
-      title: "Dark Web Markets",
-      slug: "top-dark-web-markets",
-      icon: <ShieldExclamationIcon className="h-5 w-5" />,
-    },
+
     {
       title: "Data Breaches",
       slug: "data-breaches",
@@ -111,7 +101,7 @@ export default function Header() {
     {
       name: "News",
       href: "#",
-      icon: <Bars4Icon className="h-5 w-5" />,
+      icon: <NewspaperIcon className="h-5 w-5" />,
     },
     {
       name: "Dark Web Markets",
