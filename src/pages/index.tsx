@@ -42,11 +42,8 @@ export default function HomePage({
   marketForumVendors: Post[];
   featuredPosts_: Post[];
 }) {
-  const featuredPosts = [
-    ...featuredPosts_,
-    ...posts.filter((p) => !p.isFeatured),
-  ].slice(0, 4);
-  const latestPosts = posts.slice(1, 5);
+  const featuredPosts = [...featuredPosts_].slice(0, 6);
+  const latestPosts = posts.filter((p) => !p.isFeatured)?.slice(0, 6);
   const sections: SectionLayoutProps[] = [
     // {
     //   title: "News",
