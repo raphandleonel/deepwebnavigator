@@ -2,8 +2,5 @@
 User-agent: *
 Allow: /
 
-# Host
-Host: https://darkwebnavigator.com
-
 # Sitemaps
 Sitemap: https://darkwebnavigator.com/sitemap.xml
