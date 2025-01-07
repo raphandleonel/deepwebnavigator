@@ -145,7 +145,7 @@ export const BANNER_QUERY =
       }`);
 
 export const MARKET_FORUM_VENDORS_QUERY =
-  defineQuery(`*[_type == "post" && category->slug.current in ["darknet-vendors-shop", "deep-web-forums", "top-dark-web-markets"]]{
+  defineQuery(`*[_type == "post" && category->slug.current in ["darknet-vendors-shop", "deep-web-forums", "top-dark-web-markets"]] | order(publishedAt desc) {
       title,
       slug,
       excerpt,

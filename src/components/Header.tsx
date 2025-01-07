@@ -315,10 +315,10 @@ export default function Header() {
                     ? "border-b-2 border-highlight"
                     : "hover:border-highlight hover:border-b-2"
                 }`}
-                // onMouseEnter={() =>
-                //   item.name === "News" &&
-                //   setShowCategoriesDropdown(!showCategoriesDropdown)
-                // }
+                onMouseEnter={() =>
+                  item.name === "News" &&
+                  setShowCategoriesDropdown(!showCategoriesDropdown)
+                }
                 onClick={() =>
                   item.name === "News" &&
                   setShowCategoriesDropdown(!showCategoriesDropdown)
