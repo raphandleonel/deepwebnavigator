@@ -135,7 +135,7 @@ export default function PostPage({
     });
   };
   return (
-    <div className="pb-10 px-2 sm:px-8 container mx-auto">
+    <div className="pb-10 px-2 2xl:px-8 container mx-auto">
       <Head>
         <title>{post.title}</title>
         <meta name="description" content={post.seoDescription} />
@@ -161,7 +161,7 @@ export default function PostPage({
         />
       </Head>
       <section className="flex flex-wrap px-4">
-        <div className="lg:w-2/3 w-full lg:px-32">
+        <div className="lg:w-2/3 w-full 2xl:px-8 lg:px-4">
           {/* Main Content */}
           <div className="lg:w-full">
             <div className="text-center mb-8">
@@ -337,7 +337,7 @@ export default function PostPage({
             </div>
           </div>
         </div>
-        <div className="lg:w-1/3 w-full lg:mt-[25vh] lg:px-16">
+        <div className="lg:w-1/3 w-full lg:mt-[25vh] 2xl:px-8 lg:px-4">
           {/* Related Posts Section */}
           {relatedPosts && relatedPosts.length > 0 && (
             <div className="mb-8 mt-8">

@@ -35,7 +35,7 @@ const FeaturedCard: React.FC<PostCardProps> = ({
   return (
     <li
       key={post.slug.current}
-      className="bg-gradient-to-r p-3 mb-4 rounded-md hover:scale-105 transition-transform"
+      className="bg-gradient-to-r p-3 mb-4 rounded-md hover:scale-105 transition-transform overflow-clip"
       style={{
         background:
           "linear-gradient(to right, rgb(29 78 216), rgb(30 58 138 ))",
