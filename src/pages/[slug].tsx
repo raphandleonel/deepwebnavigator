@@ -295,7 +295,7 @@ export default function PostPage({
                       <div className="flex items-center space-x-2 overflow-hidden w-full">
                         <a
                           href={value.href}
-                          className="text-blue-600 hover:text-blue-800 truncate max-w-[calc(100%-3rem)]"
+                          className="text-blue-600 hover:text-blue-800 truncate max-w-full"
                         >
                           {children}
                         </a>
