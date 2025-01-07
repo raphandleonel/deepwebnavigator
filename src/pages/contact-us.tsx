@@ -1,5 +1,7 @@
 import { ClipboardDocumentIcon, CheckIcon } from "@heroicons/react/24/outline";
 import useContactForm from "@/hooks/useContactForm"; // Importing our custom hook
+import Script from "next/script";
+import Head from "next/head";
 
 export default function ContactUsPage() {
   const {
@@ -16,6 +18,48 @@ export default function ContactUsPage() {
 
   return (
     <div className="min-h-screen py-12 sm:px-6 lg:px-8 bg-background text-foreground">
+      <Head>
+        <title>Contact - Dark Web Navigator</title>
+        <meta
+          name="description"
+          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web, including access to hidden websites, darknet forums, and tools for private communication"
+        />
+        <meta property="og:title" content="Homepage - Dark Web Navigator" />
+        <meta
+          property="og:description"
+          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web, including access to hidden websites, darknet forums, and tools for private communication"
+        />
+        <meta
+          property="og:image"
+          content="https://darkwebnavigator.com/logo.png"
+        />
+
+        {/* Twitter card tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Homepage - Dark Web Navigator" />
+        <meta
+          name="twitter:description"
+          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web..."
+        />
+        <meta
+          name="twitter:image"
+          content="https://darkwebnavigator.com/logo.png"
+        />
+        <meta name="twitter:site" content="@darkwebnavigator" />
+      </Head>
+      {/* Google Analytics */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-BBGWDRZQGK"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BBGWDRZQGK');
+        `}
+      </Script>
       <div className="max-w-2xl mx-auto rounded-lg shadow-lg p-8">
         <h2 className="text-3xl font-bold text-center mb-6">Contact Us</h2>
 

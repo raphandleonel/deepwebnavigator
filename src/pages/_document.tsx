@@ -19,7 +19,7 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap"
           rel="stylesheet"
         />
-        {/* Dynamic theme-color for better SEO */}
+        {/* Theme color for better UX */}
         <meta
           name="theme-color"
           content="#000000"
@@ -32,23 +32,19 @@ export default function Document() {
         />
       </Head>
       <body className="antialiased transition-colors duration-200">
-        {/* Inline script to manage SSR-safe theme setup */}
+        {/* Inline script for SSR-safe theme setup */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                try {
-                  const theme = localStorage.getItem('theme');
-                  const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  const htmlElement = document.documentElement;
+                const theme = localStorage.getItem('theme');
+                const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const htmlElement = document.documentElement;
 
-                  if (theme === 'dark' || (!theme && prefersDarkMode)) {
-                    htmlElement.setAttribute('data-theme', 'dark');
-                  } else {
-                    htmlElement.setAttribute('data-theme', 'light');
-                  }
-                } catch (e) {
-                  console.error('Theme initialization failed:', e);
+                if (theme === 'dark' || (!theme && prefersDarkMode)) {
+                  htmlElement.setAttribute('data-theme', 'dark');
+                } else {
+                  htmlElement.setAttribute('data-theme', 'light');
                 }
               })();
             `,

@@ -3,6 +3,7 @@ import { CATEGORY_QUERY } from "@/sanity/lib/queries";
 import { Post } from "@/interfaces";
 import PostCard from "@/components/PostCard";
 import Head from "next/head";
+import Script from "next/script";
 
 export async function getStaticPaths() {
   const slugs = await client.fetch(`*[_type == "category"].slug.current`);
@@ -42,6 +43,19 @@ export default function CategoryPage({
         <meta name="description" content={category.description || ""} />
         {keywords && <meta name="keywords" content={keywords} />}
       </Head>
+      {/* Google Analytics */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-BBGWDRZQGK"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BBGWDRZQGK');
+        `}
+      </Script>
       <h1 className="text-3xl font-bold mb-4">{category.title}</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1">
         {posts.map((post) => (

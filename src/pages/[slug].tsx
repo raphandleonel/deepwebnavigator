@@ -15,6 +15,7 @@ import { formateDate } from "@/utils/formatDate";
 import { useState } from "react";
 import { ClipboardDocumentIcon, CheckIcon } from "@heroicons/react/24/outline";
 import PostCard from "@/components/PostCard";
+import Script from "next/script";
 
 const builder = imageUrlBuilder(client);
 
@@ -160,6 +161,19 @@ export default function PostPage({
           }}
         />
       </Head>
+      {/* Google Analytics */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-BBGWDRZQGK"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BBGWDRZQGK');
+        `}
+      </Script>
       <section className="flex flex-wrap px-4">
         <div className="lg:w-2/3 w-full 2xl:px-8 lg:px-4">
           {/* Main Content */}

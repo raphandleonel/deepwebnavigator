@@ -5,28 +5,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 
-export default function Layout({ children, title, description }: LayoutProps) {
+export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <Head>
-        <title>{title || "Dark Web Navigator"}</title>
-        <meta
-          name="description"
-          content={
-            description ||
-            "Explore the latest cybercrime news, data breaches, DDoS attacks, and resources."
-          }
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/static/favicon.ico" />
-        <meta property="og:title" content={title || "DeepWeb Navigator"} />
-        <meta
-          property="og:description"
-          content={
-            description ||
-            "Explore the latest cybercrime news, data breaches, DDoS attacks, and resources."
-          }
-        />
+        <meta name="apple-mobile-web-app-title" content="dwnavigator" />
       </Head>
 
       <div className="min-h-screen flex flex-col bg-background text-foreground overflow-x-hidden">

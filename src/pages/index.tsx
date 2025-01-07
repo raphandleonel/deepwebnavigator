@@ -82,7 +82,7 @@ export default function HomePage({
         />
         <meta
           property="og:image"
-          content="https://darkwebnavigator.com/og-image.jpg"
+          content="https://darkwebnavigator.com/logo.png"
         />
 
         {/* Twitter card tags */}
@@ -94,7 +94,7 @@ export default function HomePage({
         />
         <meta
           name="twitter:image"
-          content="https://darkwebnavigator.com/og-image.jpg"
+          content="https://darkwebnavigator.com/logo.png"
         />
         <meta name="twitter:site" content="@darkwebnavigator" />
       </Head>
@@ -115,6 +115,19 @@ export default function HomePage({
           }),
         }}
       />
+      {/* Google Analytics */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-BBGWDRZQGK"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BBGWDRZQGK');
+        `}
+      </Script>
       {/* Banner Section */}
       <Banner banners={banners} /> {/* Pass banners to Banner component */}
       {/* Three-Column Layout */}
