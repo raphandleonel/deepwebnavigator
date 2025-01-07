@@ -16,6 +16,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import SubscribeModal from "./SubscribeModal";
+import { SearchResult } from "@/interfaces";
+import ResultCard from "./ResultCard";
 
 const fetchCategories = async () => {
   return [
@@ -67,6 +69,33 @@ interface category {
   slug: string;
   icon: JSX.Element;
 }
+const navigationItems = [
+  {
+    name: "Home",
+    href: "/",
+    icon: <HomeIcon className="h-5 w-5" />,
+  },
+  {
+    name: "Dark Web Markets",
+    href: "/category/top-dark-web-markets",
+    icon: <ShieldExclamationIcon className="h-5 w-5" />,
+  },
+  {
+    name: "Forums",
+    href: "/category/deep-web-forums",
+    icon: <UsersIcon className="h-5 w-5" />,
+  },
+  {
+    name: "Darknet Vendors",
+    href: "/category/darknet-vendors-shop",
+    icon: <ShoppingBagIcon className="h-5 w-5" />,
+  },
+  {
+    name: "News",
+    href: "#",
+    icon: <NewspaperIcon className="h-5 w-5" />,
+  },
+];
 
 export default function Header() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -75,6 +104,10 @@ export default function Header() {
   const [showDropdown, setShowDropdown] = useState(false); // State to control dropdown visibility
   const [showCategoriesDropdown, setShowCategoriesDropdown] = useState(false); // Dropdown state
   const [categories, setCategories] = useState<category[]>([]);
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+  const [query, setQuery] = useState("");
   useEffect(() => {
     setMounted(true);
     const loadCategories = async () => {
@@ -91,39 +124,35 @@ export default function Header() {
     setTheme(newTheme);
     document.documentElement.setAttribute("data-theme", newTheme);
   };
+  // State and API call in Header component
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!query) return;
 
-  const navigationItems = [
-    {
-      name: "Home",
-      href: "/",
-      icon: <HomeIcon className="h-5 w-5" />,
-    },
-    {
-      name: "News",
-      href: "#",
-      icon: <NewspaperIcon className="h-5 w-5" />,
-    },
-    {
-      name: "Dark Web Markets",
-      href: "/category/top-dark-web-markets",
-      icon: <ShieldExclamationIcon className="h-5 w-5" />,
-    },
-    {
-      name: "Forums",
-      href: "/category/deep-web-forums",
-      icon: <UsersIcon className="h-5 w-5" />,
-    },
-    {
-      name: "Darknet Vendors",
-      href: "/category/darknet-vendors-shop",
-      icon: <ShoppingBagIcon className="h-5 w-5" />,
-    },
-  ];
+    setLoading(true);
+    setShowResults(true);
+
+    try {
+      const response = await fetch(
+        `/api/search?query=${encodeURIComponent(query)}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch search results");
+      }
+      const data: SearchResult[] = await response.json();
+      setSearchResults(data);
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+      setSearchResults([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <header className="bg-background text-foreground items-center">
       {/* Top Section */}
-      <div className="flex items-center justify-between px-4 py-3 container mx-auto">
+      <div className="flex items-center justify-between px-4 py-3 container mx-auto lg:gap-6">
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
@@ -141,6 +170,61 @@ export default function Header() {
             className={resolvedTheme === "light" ? "block" : "hidden"}
           />
         </Link>
+        <div className="hidden lg:block relative w-full max-w-2xl">
+          {/* Search Form */}
+          <form className="relative" onSubmit={handleSearch}>
+            <div className="relative">
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Search posts..."
+              />
+              <button
+                type="submit"
+                className="absolute right-1 bottom-1 bg-blue-600 text-white px-4 py-1 rounded-lg hover:bg-blue-700"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+
+          {/* Expandable Results Section */}
+          <div
+            className={`absolute z-10 left-0 w-full mt-2 bg-gray-100 dark:bg-gray-800 transition-all duration-300 overflow-hidden ${
+              showResults ? "max-h-[500px] p-4" : "max-h-0 p-0"
+            }`}
+            style={{ borderRadius: "0 0 8px 8px" }}
+          >
+            {/* Collapse Button */}
+            {showResults && (
+              <div className="text-right">
+                <button
+                  onClick={() => setShowResults(false)}
+                  className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500 text-sm mb-2"
+                >
+                  Collapse Results
+                </button>
+              </div>
+            )}
+            {loading ? (
+              <p className="text-center text-gray-500 dark:text-gray-300">
+                Loading...
+              </p>
+            ) : searchResults.length > 0 ? (
+              <div className="grid gap-4 grid-cols-1 max-h-60 overflow-y-auto">
+                {searchResults.map((result) => (
+                  <ResultCard key={result.slug} result={result} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-gray-500 dark:text-gray-300">
+                {`No results found for "${query}".`}
+              </p>
+            )}
+          </div>
+        </div>
 
         <div className="items-center space-x-4 flex">
           {/* Subscribe Button */}
@@ -231,10 +315,10 @@ export default function Header() {
                     ? "border-b-2 border-highlight"
                     : "hover:border-highlight hover:border-b-2"
                 }`}
-                onMouseEnter={() =>
-                  item.name === "News" &&
-                  setShowCategoriesDropdown(!showCategoriesDropdown)
-                }
+                // onMouseEnter={() =>
+                //   item.name === "News" &&
+                //   setShowCategoriesDropdown(!showCategoriesDropdown)
+                // }
                 onClick={() =>
                   item.name === "News" &&
                   setShowCategoriesDropdown(!showCategoriesDropdown)

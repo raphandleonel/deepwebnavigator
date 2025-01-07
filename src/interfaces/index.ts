@@ -82,3 +82,10 @@ export interface IBanner {
   postLink?: { slug: { current: string } };
   externalLink?: string;
 }
+
+export type SearchResult = {
+  title: string;
+  slug: string;
+  category: string;
+  publishedAt: string;
+};
