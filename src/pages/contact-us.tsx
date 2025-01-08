@@ -2,6 +2,7 @@ import { ClipboardDocumentIcon, CheckIcon } from "@heroicons/react/24/outline";
 import useContactForm from "@/hooks/useContactForm"; // Importing our custom hook
 import Script from "next/script";
 import Head from "next/head";
+import { truncateUrl } from "@/utils/truncate";
 
 export default function ContactUsPage() {
   const {
@@ -149,14 +150,14 @@ export default function ContactUsPage() {
           <h3 className="text-xl font-semibold">Useful Links</h3>
           <ul className="space-y-2">
             {[
-              "dreadytofatroptsdj6io7l3xptbet6onoyno2yv7jicoxknyazubrad.onion",
-              "anubismarket@jabb3r.de",
+              "darkwebnavigator@jabb3r.de",
+              "dreadytofatroptsdj6io7l3xptbet6onoyno2yv7jicoxknyazubrad.onion/u/DarkWebNavigator/",
             ].map((link, index) => (
               <li
                 key={index}
                 className="flex items-center justify-between bg-background rounded-lg shadow-sm"
               >
-                <span className="truncate">{link}</span>
+                <span className="truncate">{truncateUrl(link, 45)}</span>
                 <button
                   onClick={() => handleCopy(link, index)}
                   className="ml-4 p-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700"
