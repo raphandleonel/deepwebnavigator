@@ -62,7 +62,7 @@ export default function ContactUsPage() {
         `}
       </Script>
       <div className="max-w-2xl mx-auto rounded-lg shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-center mb-6">Contact Us</h2>
+        <h1 className="text-3xl font-bold text-center mb-6">Contact Us</h1>
 
         {/* Contact Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
