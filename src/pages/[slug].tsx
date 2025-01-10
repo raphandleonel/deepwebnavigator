@@ -73,12 +73,15 @@ export default function PostPage({
   const readTime = `${post.readTime || 1} min read`;
 
   const breadcrumbItems = [
-    { name: "Home", url: "/" },
+    { name: "Home", url: "https://darkwebnavigator.com/" },
     {
       name: post.category.title,
-      url: `/category/${post.category.slug.current}`,
+      url: `https://darkwebnavigator.com/category/${post.category.slug.current}`,
     },
-    { name: post.title, url: `/${post.slug.current}` },
+    {
+      name: post.title,
+      url: `https://darkwebnavigator.com/${post.slug.current}`,
+    },
   ];
 
   const breadcrumbSchema = {
@@ -95,11 +98,11 @@ export default function PostPage({
   const tags = post.tags?.map((tag) => tag.title).join(", ");
 
   const schemaTags = post.tags
-    ? post.tags.map((tag) => ({
+    ? post.tags.map((tag, index) => ({
         "@type": "ListItem",
-        position: post.tags ? post.tags.indexOf(tag) + 1 : 1,
+        position: index + 1,
         name: tag.title,
-        item: `/tags/${tag.slug.current}`, // You can link to your tag page
+        item: `https://darkwebnavigator.com/tags/${tag.slug.current}`, // Absolute URL
       }))
     : [];
 
@@ -115,11 +118,10 @@ export default function PostPage({
     datePublished: post.publishedAt,
     dateModified: post.publishedAt,
     description: post.excerpt,
-    keywords: tags,
+    keywords: tags, // Comma-separated keywords
     mainEntityOfPage: `https://darkwebnavigator.com/${post.slug.current}`,
-    breadcrumb: breadcrumbSchema,
+    breadcrumb: breadcrumbSchema, // Breadcrumb schema
     articleSection: post.category?.title,
-    tag: schemaTags,
   };
   const handleCopy = (link: string, index: string) => {
     navigator.clipboard.writeText(link).then(() => {
@@ -157,6 +159,7 @@ export default function PostPage({
             __html: JSON.stringify(postSchema),
           }}
         />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
