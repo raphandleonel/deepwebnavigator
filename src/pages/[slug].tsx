@@ -97,15 +97,6 @@ export default function PostPage({
 
   const tags = post.tags?.map((tag) => tag.title).join(", ");
 
-  const schemaTags = post.tags
-    ? post.tags.map((tag, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        name: tag.title,
-        item: `https://darkwebnavigator.com/tags/${tag.slug.current}`, // Absolute URL
-      }))
-    : [];
-
   const postSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -314,7 +305,11 @@ export default function PostPage({
                     link: ({ children, value }) => (
                       <div className="flex items-center space-x-2 overflow-hidden w-full">
                         <a
-                          href={value.href}
+                          href={
+                            value.href.startsWith("http")
+                              ? value.href
+                              : `https://${value.href}`
+                          }
                           className="text-blue-600 hover:text-blue-800 truncate max-w-full"
                         >
                           {children}

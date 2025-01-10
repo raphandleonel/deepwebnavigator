@@ -50,7 +50,7 @@ export default function CategoryPage({
         />
         <meta
           property="og:url"
-          content={`https://darkwebnavigator.com/category/${category.title}`}
+          content={`https://darkwebnavigator.com/category/${posts[0].category.slug.current}`}
         />
 
         {/* Twitter card tags */}
