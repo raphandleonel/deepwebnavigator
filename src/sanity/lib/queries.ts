@@ -159,3 +159,13 @@ export const MARKET_FORUM_VENDORS_QUERY =
         url
       }
     }`);
+
+export const CATEGORY_LIST_QUERY = defineQuery(`
+  *[_type == "category"]{
+    title,
+    slug {
+      current
+    },
+    description
+  }
+`);

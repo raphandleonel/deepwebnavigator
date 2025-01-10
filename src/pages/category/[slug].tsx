@@ -4,6 +4,14 @@ import { Post } from "@/interfaces";
 import PostCard from "@/components/PostCard";
 import Head from "next/head";
 import Script from "next/script";
+import Image from "next/image";
+import Link from "next/link";
+
+type Category = {
+  title: string;
+  description: string;
+  keywords: string[];
+};
 
 export async function getStaticPaths() {
   const slugs = await client.fetch(`*[_type == "category"].slug.current`);
@@ -28,39 +36,54 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
   };
 }
 
-export default function CategoryPage({
-  category,
-  posts,
-}: {
-  category: { title: string; description: string; keywords: string[] };
+type Props = {
+  category: Category;
   posts: Post[];
-}) {
-  const keywords = category.keywords ? category.keywords.join(", ") : "";
+};
+
+export default function CategoryPage({ category, posts }: Props) {
   return (
     <div className="container mx-auto px-4 py-8">
+      <Metadata category={category} posts={posts} />
+      <h1 className="text-3xl font-bold mb-4">{category.title}</h1>
+      {posts.length ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {posts.map((post) => (
+            <PostCard key={post.slug.current} post={post} size="medium" />
+          ))}
+        </div>
+      ) : (
+        <NoPostsFallback category={category} />
+      )}
+    </div>
+  );
+}
+
+function Metadata({ category, posts }: { category: Category; posts: Post[] }) {
+  const keywords = category.keywords?.join(", ") || "";
+  const ogImage = "https://darkwebnavigator.com/logo.png";
+  const ogUrl =
+    posts.length > 0
+      ? `https://darkwebnavigator.com/category/${posts[0]?.category?.slug?.current}`
+      : `https://darkwebnavigator.com/category`;
+
+  return (
+    <>
       <Head>
         <title>{category.title}</title>
-        <meta name="description" content={category.description || ""} />
-        {keywords && <meta name="keywords" content={keywords} />}
+        <meta
+          name="description"
+          content={category.description || "Explore articles in this category."}
+        />
+        <meta name="keywords" content={keywords} />
         <meta property="og:title" content={`${category.title} - Category`} />
         <meta property="og:description" content={category.description} />
-        <meta
-          property="og:image"
-          content="https://darkwebnavigator.com/logo.png"
-        />
-        <meta
-          property="og:url"
-          content={`https://darkwebnavigator.com/category/${posts[0].category.slug.current}`}
-        />
-
-        {/* Twitter card tags */}
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:url" content={ogUrl} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${category.title} - Category`} />
         <meta name="twitter:description" content={category.description} />
-        <meta
-          name="twitter:image"
-          content="https://darkwebnavigator.com/logo.png"
-        />
+        <meta name="twitter:image" content={ogImage} />
         <meta name="twitter:site" content="@darkwebnavigator" />
       </Head>
       {/* Google Analytics */}
@@ -76,11 +99,30 @@ export default function CategoryPage({
           gtag('config', 'G-BBGWDRZQGK');
         `}
       </Script>
-      <h1 className="text-3xl font-bold mb-4">{category.title}</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1">
-        {posts.map((post) => (
-          <PostCard key={post.slug.current} post={post} size="medium" />
-        ))}
+    </>
+  );
+}
+
+function NoPostsFallback({ category }: { category: Category }) {
+  return (
+    <div className="text-center">
+      <p className="text-lg text-gray-600 mb-4">
+        {`Sorry, there are no posts in the ${category.title} category yet.`}
+      </p>
+      <Link
+        href="/category"
+        className="inline-block bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600"
+      >
+        Explore Other Categories
+      </Link>
+      <div className="mt-8">
+        <Image
+          src="/placeholder.png"
+          alt="No posts available"
+          width={300}
+          height={300}
+          className="mx-auto"
+        />
       </div>
     </div>
   );
