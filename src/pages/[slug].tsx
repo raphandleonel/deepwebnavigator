@@ -116,7 +116,7 @@ export default function PostPage({
     dateModified: post.publishedAt,
     description: post.excerpt,
     keywords: tags,
-    mainEntityOfPage: `https://darkwebnavigator.com/${post.slug}`,
+    mainEntityOfPage: `https://darkwebnavigator.com/${post.slug.current}`,
     breadcrumb: breadcrumbSchema,
     articleSection: post.category?.title,
     tag: schemaTags,
@@ -145,7 +145,10 @@ export default function PostPage({
         {post.image && (
           <meta property="og:image" content={urlFor(post.image).url()} />
         )}
-        <meta property="og:url" content={`/posts/${post.slug}`} />
+        <meta
+          property="og:url"
+          content={`https://darkwebnavigator.com/${post.slug.current}`}
+        />
         <meta property="og:type" content="article" />
         {tags && <meta name="keywords" content={tags} />}
         <script
