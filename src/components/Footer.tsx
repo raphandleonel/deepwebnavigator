@@ -30,7 +30,7 @@ const socialLinks = [
 ];
 
 const navLinks = [
-  { href: "/home", label: "Home" },
+  { href: "/", label: "Home" },
   {
     href: "/category/top-dark-web-markets",
     label: "Featured Markets",
