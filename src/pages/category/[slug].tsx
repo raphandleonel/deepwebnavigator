@@ -42,6 +42,26 @@ export default function CategoryPage({
         <title>{category.title}</title>
         <meta name="description" content={category.description || ""} />
         {keywords && <meta name="keywords" content={keywords} />}
+        <meta property="og:title" content={`${category.title} - Category`} />
+        <meta property="og:description" content={category.description} />
+        <meta
+          property="og:image"
+          content="https://darkwebnavigator.com/logo.png"
+        />
+        <meta
+          property="og:url"
+          content={`https://darkwebnavigator.com/category/${category.title}`}
+        />
+
+        {/* Twitter card tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${category.title} - Category`} />
+        <meta name="twitter:description" content={category.description} />
+        <meta
+          name="twitter:image"
+          content="https://darkwebnavigator.com/logo.png"
+        />
+        <meta name="twitter:site" content="@darkwebnavigator" />
       </Head>
       {/* Google Analytics */}
       <Script
