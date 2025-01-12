@@ -22,6 +22,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     props: {
       author: authorData,
       posts: authorData.posts,
+      slug: params.slug,
     },
     revalidate: 30,
   };
@@ -31,13 +32,31 @@ export default function AuthorPage({
   author,
   posts,
 }: {
-  author: { name: string; bio?: string };
+  author: { name: string; bio?: string; slug: string };
   posts: Post[];
 }) {
+  const pageTitle = `Posts by ${author.name} - Dark Web Navigator`;
+  const pageDescription = author.bio
+    ? `${author.bio}`
+    : `Explore articles and posts authored by ${author.name} on Dark Web Navigator.`;
+  const ogImage = "https://darkwebnavigator.com/logo.png";
+  const ogUrl = `https://darkwebnavigator.com/author/${author.slug}`;
+
   return (
     <div className="container mx-auto px-4 py-8">
       <Head>
-        <title>{author.name}</title>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:url" content={ogUrl} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:site" content="@darkwebnavigator" />
+        <link rel="canonical" href={ogUrl} />
       </Head>
       {/* Google Analytics */}
       <Script

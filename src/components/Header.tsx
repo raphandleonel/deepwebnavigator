@@ -19,51 +19,50 @@ import SubscribeModal from "./SubscribeModal";
 import { SearchResult } from "@/interfaces";
 import ResultCard from "./ResultCard";
 
-const fetchCategories = async () => {
-  return [
-    {
-      title: "Insight",
-      slug: "insights",
-      icon: <InformationCircleIcon className="h-5 w-5" />,
-    },
-    {
-      title: "DDoS Attacks",
-      slug: "ddos-attacks",
-      icon: <InformationCircleIcon className="h-5 w-5" />,
-    },
-    {
-      title: "Leaks",
-      slug: "leaks",
-      icon: <InformationCircleIcon className="h-5 w-5" />,
-    },
-    {
-      title: "Vulnerabilities",
-      slug: "vulnerabilities",
-      icon: <AcademicCapIcon className="h-5 w-5" />,
-    },
-    {
-      title: "Arrests",
-      slug: "arrests",
-      icon: <InformationCircleIcon className="h-5 w-5" />,
-    },
-    {
-      title: "Technology",
-      slug: "technology",
-      icon: <NewspaperIcon className="h-5 w-5" />,
-    },
+const categories: category[] = [
+  {
+    title: "Insight",
+    slug: "insights",
+    icon: <InformationCircleIcon className="h-5 w-5" />,
+  },
+  {
+    title: "DDoS Attacks",
+    slug: "ddos-attacks",
+    icon: <InformationCircleIcon className="h-5 w-5" />,
+  },
+  {
+    title: "Leaks",
+    slug: "leaks",
+    icon: <InformationCircleIcon className="h-5 w-5" />,
+  },
+  {
+    title: "Vulnerabilities",
+    slug: "vulnerabilities",
+    icon: <AcademicCapIcon className="h-5 w-5" />,
+  },
+  {
+    title: "Arrests",
+    slug: "arrests",
+    icon: <InformationCircleIcon className="h-5 w-5" />,
+  },
+  {
+    title: "Technology",
+    slug: "technology",
+    icon: <NewspaperIcon className="h-5 w-5" />,
+  },
 
-    {
-      title: "Data Breaches",
-      slug: "data-breaches",
-      icon: <ShieldExclamationIcon className="h-5 w-5" />,
-    },
-    {
-      title: "Guides",
-      slug: "guides",
-      icon: <InformationCircleIcon className="h-5 w-5" />,
-    },
-  ];
-};
+  {
+    title: "Data Breaches",
+    slug: "data-breaches",
+    icon: <ShieldExclamationIcon className="h-5 w-5" />,
+  },
+  {
+    title: "Guides",
+    slug: "guides",
+    icon: <InformationCircleIcon className="h-5 w-5" />,
+  },
+];
+
 interface category {
   title: string;
   slug: string;
@@ -103,18 +102,12 @@ export default function Header() {
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false); // State to control dropdown visibility
   const [showCategoriesDropdown, setShowCategoriesDropdown] = useState(false); // Dropdown state
-  const [categories, setCategories] = useState<category[]>([]);
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [query, setQuery] = useState("");
   useEffect(() => {
     setMounted(true);
-    const loadCategories = async () => {
-      const data = await fetchCategories();
-      setCategories(data);
-    };
-    loadCategories();
   }, []);
 
   if (!mounted) return null;

@@ -169,3 +169,14 @@ export const CATEGORY_LIST_QUERY = defineQuery(`
     description
   }
 `);
+
+export const AUTHOR_LIST_QUERY = defineQuery(`
+  *[_type == "author"]{
+    name,
+    bio,
+    slug {
+      current
+    },
+    image
+  }
+`);

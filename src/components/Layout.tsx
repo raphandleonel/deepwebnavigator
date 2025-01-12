@@ -9,7 +9,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <>
       <Head>
-        <meta name="apple-mobile-web-app-title" content="dwnavigator" />
+        <meta name="apple-mobile-web-app-title" content="dwnav" />
       </Head>
 
       <div className="min-h-screen flex flex-col bg-background text-foreground overflow-x-hidden">
