@@ -16,6 +16,7 @@ import { useState } from "react";
 import { ClipboardDocumentIcon, CheckIcon } from "@heroicons/react/24/outline";
 import PostCard from "@/components/PostCard";
 import Script from "next/script";
+import { siteUrl } from "@/utils/constants";
 
 const builder = imageUrlBuilder(client);
 
@@ -73,14 +74,14 @@ export default function PostPage({
   const readTime = `${post.readTime || 1} min read`;
 
   const breadcrumbItems = [
-    { name: "Home", url: "https://darkwebnavigator.com/" },
+    { name: "Home", url: `${siteUrl}/` },
     {
       name: post.category.title,
-      url: `https://darkwebnavigator.com/category/${post.category.slug.current}`,
+      url: `${siteUrl}/category/${post.category.slug.current}`,
     },
     {
       name: post.title,
-      url: `https://darkwebnavigator.com/${post.slug.current}`,
+      url: `${siteUrl}/${post.slug.current}`,
     },
   ];
 
@@ -110,7 +111,7 @@ export default function PostPage({
     dateModified: post.publishedAt,
     description: post.excerpt,
     keywords: tags, // Comma-separated keywords
-    mainEntityOfPage: `https://darkwebnavigator.com/${post.slug.current}`,
+    mainEntityOfPage: `${siteUrl}/${post.slug.current}`,
     breadcrumb: breadcrumbSchema, // Breadcrumb schema
     articleSection: post.category?.title,
   };
@@ -128,29 +129,25 @@ export default function PostPage({
       }, 2000); // Revert the icon back after 2 seconds
     });
   };
+  const meta = generatePostMeta(post, tags);
   return (
     <div className="pb-10 px-2 2xl:px-8 container mx-auto">
       <Head>
-        <title>{post.title}</title>
-        <meta name="description" content={post.seoDescription} />
-        <meta property="og:title" content={post.seoTitle} />
-        <meta property="og:description" content={post.excerpt} />
-        {post.image && (
-          <meta property="og:image" content={urlFor(post.image).url()} />
-        )}
-        <meta
-          property="og:url"
-          content={`https://darkwebnavigator.com/${post.slug.current}`}
-        />
+        <title>{meta.pageTitle}</title>
+        <meta name="description" content={meta.pageDescription} />
+        <meta property="og:title" content={meta.ogTitle} />
+        <meta property="og:description" content={meta.ogDescription} />
+        <meta property="og:image" content={meta.ogImage} />
+        <meta property="og:url" content={meta.ogUrl} />
         <meta property="og:type" content="article" />
-        {tags && <meta name="keywords" content={tags} />}
+        {meta.keywords && <meta name="keywords" content={meta.keywords} />}
+        <link rel="canonical" href={meta.canonicalUrl} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(postSchema),
           }}
         />
-
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -391,3 +388,17 @@ export default function PostPage({
     </div>
   );
 }
+
+const generatePostMeta = (post: Post, tags: string | undefined) => {
+  const postUrl = `${siteUrl}/${post.slug.current}`;
+  return {
+    pageTitle: post.title,
+    pageDescription: post.seoDescription || post.excerpt || "",
+    ogTitle: post.seoTitle || post.title,
+    ogDescription: post.excerpt || "",
+    ogImage: post.image ? urlFor(post.image).url() : `${siteUrl}/logo.png`,
+    ogUrl: postUrl,
+    keywords: tags || "",
+    canonicalUrl: postUrl,
+  };
+};

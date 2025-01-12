@@ -3,6 +3,12 @@ import useContactForm from "@/hooks/useContactForm"; // Importing our custom hoo
 import Script from "next/script";
 import Head from "next/head";
 import { truncateUrl } from "@/utils/truncate";
+const siteUrl = "https://darkwebnavigator.com";
+const pageTitle = "Contact Us | Dark Web Navigator";
+const pageDescription =
+  "Have questions or need assistance? Contact Dark Web Navigator for inquiries about navigating the dark web, listing your service, or exploring darknet forums and tools.";
+const ogImage = `${siteUrl}/logo.png`;
+const ogUrl = `${siteUrl}/contact-us`;
 
 export default function ContactUsPage() {
   const {
@@ -20,34 +26,24 @@ export default function ContactUsPage() {
   return (
     <div className="min-h-screen py-12 sm:px-6 lg:px-8 bg-background text-foreground">
       <Head>
-        <title>Contact - Dark Web Navigator</title>
-        <meta
-          name="description"
-          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web, including access to hidden websites, darknet forums, and tools for private communication"
-        />
-        <meta property="og:title" content="Homepage - Dark Web Navigator" />
-        <meta
-          property="og:description"
-          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web, including access to hidden websites, darknet forums, and tools for private communication"
-        />
-        <meta
-          property="og:image"
-          content="https://darkwebnavigator.com/logo.png"
-        />
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:url" content={ogUrl} />
 
         {/* Twitter card tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Homepage - Dark Web Navigator" />
-        <meta
-          name="twitter:description"
-          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web..."
-        />
-        <meta
-          name="twitter:image"
-          content="https://darkwebnavigator.com/logo.png"
-        />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content={ogImage} />
         <meta name="twitter:site" content="@darkwebnavigator" />
+
+        {/* Canonical Tag */}
+        <link rel="canonical" href={ogUrl} />
       </Head>
+
       {/* Google Analytics */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-BBGWDRZQGK"

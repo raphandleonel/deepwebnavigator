@@ -5,6 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
 import Script from "next/script";
+import { siteUrl } from "@/utils/constants";
+
+// Metadata Constants
+const defaultOgImage = `${siteUrl}/logo.png`;
+const categoriesPageUrl = `${siteUrl}/category`;
 
 type Category = {
   title: string;
@@ -28,31 +33,40 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 };
 
 export default function CategoriesPage({ categories }: Props) {
-  const pageTitle = "Categories - DarkWebNavigator";
+  const pageTitle = "Categories - Dark Web Navigator";
   const pageDescription =
-    "Explore all the categories available on DarkWebNavigator. Discover curated content from various topics.";
-  const ogImage = "https://darkwebnavigator.com/logo.png";
-  const ogUrl = "https://darkwebnavigator.com/category";
+    "Explore all the categories available on Dark Web Navigator. Discover curated content from various topics.";
 
   if (!categories.length) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">
         <Head>
-          <title>No Categories Found - DarkWebNavigator</title>
+          <title>No Categories Found - Dark Web Navigator</title>
           <meta
             name="description"
             content="No categories are currently available. Please check back later."
           />
           <meta
             property="og:title"
-            content="No Categories Found - DarkWebNavigator"
+            content="No Categories Found - Dark Web Navigator"
           />
           <meta
             property="og:description"
             content="No categories are currently available. Please check back later."
           />
-          <meta property="og:image" content={ogImage} />
-          <meta property="og:url" content={ogUrl} />
+          <meta property="og:image" content={defaultOgImage} />
+          <meta property="og:url" content={categoriesPageUrl} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta
+            name="twitter:title"
+            content="No Categories Found - Dark Web Navigator"
+          />
+          <meta
+            name="twitter:description"
+            content="No categories are currently available. Please check back later."
+          />
+          <meta name="twitter:image" content={defaultOgImage} />
+          <link rel="canonical" href={categoriesPageUrl} />
         </Head>
         {/* Google Analytics */}
         <Script
@@ -91,13 +105,15 @@ export default function CategoriesPage({ categories }: Props) {
         <meta name="description" content={pageDescription} />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content={ogImage} />
-        <meta property="og:url" content={ogUrl} />
+        <meta property="og:image" content={defaultOgImage} />
+        <meta property="og:url" content={categoriesPageUrl} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDescription} />
-        <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:image" content={defaultOgImage} />
+        <link rel="canonical" href={categoriesPageUrl} />
       </Head>
+
       {/* Google Analytics */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-BBGWDRZQGK"

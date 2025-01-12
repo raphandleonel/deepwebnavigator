@@ -6,6 +6,7 @@ import Head from "next/head";
 import Script from "next/script";
 import Image from "next/image";
 import Link from "next/link";
+import { ogImage, siteUrl } from "@/utils/constants";
 
 type Category = {
   title: string;
@@ -61,30 +62,44 @@ export default function CategoryPage({ category, posts }: Props) {
 
 function Metadata({ category, posts }: { category: Category; posts: Post[] }) {
   const keywords = category.keywords?.join(", ") || "";
-  const ogImage = "https://darkwebnavigator.com/logo.png";
+  const categoryUrl = `${siteUrl}/category/`;
   const ogUrl =
     posts.length > 0
-      ? `https://darkwebnavigator.com/category/${posts[0]?.category?.slug?.current}`
-      : `https://darkwebnavigator.com/category`;
-
+      ? `${siteUrl}/category/${posts[0]?.category?.slug?.current}`
+      : categoryUrl;
+  const pageDescription = `Discover insightful articles in the ${category.title} category on Dark Web Navigator. Explore curated posts, tips, and guides related to ${category.title}.`;
   return (
     <>
       <Head>
-        <title>{category.title}</title>
+        <title>{`${category.title} - Category | Dark Web Navigator`}</title>
         <meta
           name="description"
-          content={category.description || "Explore articles in this category."}
+          content={category.description || pageDescription}
         />
         <meta name="keywords" content={keywords} />
-        <meta property="og:title" content={`${category.title} - Category`} />
-        <meta property="og:description" content={category.description} />
+        <meta
+          property="og:title"
+          content={`${category.title} - Category | Dark Web Navigator`}
+        />
+        <meta
+          property="og:description"
+          content={category.description || pageDescription}
+        />
         <meta property="og:image" content={ogImage} />
         <meta property="og:url" content={ogUrl} />
+        <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${category.title} - Category`} />
-        <meta name="twitter:description" content={category.description} />
+        <meta
+          name="twitter:title"
+          content={`${category.title} - Category | Dark Web Navigator`}
+        />
+        <meta
+          name="twitter:description"
+          content={category.description || pageDescription}
+        />
         <meta name="twitter:image" content={ogImage} />
         <meta name="twitter:site" content="@darkwebnavigator" />
+        <link rel="canonical" href={ogUrl} />
       </Head>
       {/* Google Analytics */}
       <Script

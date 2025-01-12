@@ -11,6 +11,7 @@ import ThreeColumnLayout from "@/components/ThreeColumnLayout";
 import Head from "next/head";
 import Script from "next/script";
 import SectionLayout from "@/components/SectionLayout";
+import { pageDescription, pageTitle } from "@/utils/constants";
 
 export async function getStaticProps() {
   const featuredPosts_ = await client.fetch<Post[]>(FEATURED_POSTS_QUERY);
@@ -67,14 +68,13 @@ export default function HomePage({
       posts: posts.filter((i) => i.category.slug.current === "guides"),
     },
   ];
-  const pageDescription =
-    "Dark Web Navigator is your trusted guide to exploring the dark web, finding hidden websites, darknet forums, and tools for secure communication.";
+
   return (
     <>
       <Head>
         <title>Dark Web Navigator: Your Guide to the Hidden Internet</title>
         <meta name="description" content={pageDescription} />
-        <meta property="og:title" content="Homepage - Dark Web Navigator" />
+        <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta
           property="og:image"
@@ -83,16 +83,15 @@ export default function HomePage({
 
         {/* Twitter card tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Homepage - Dark Web Navigator" />
-        <meta
-          name="twitter:description"
-          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web..."
-        />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
         <meta
           name="twitter:image"
           content="https://darkwebnavigator.com/logo.png"
         />
         <meta name="twitter:site" content="@darkwebnavigator" />
+        {/* Canonical Tag */}
+        <link rel="canonical" href="https://darkwebnavigator.com" />
       </Head>
       <Script
         type="application/ld+json"

@@ -1,4 +1,5 @@
 import useGetListedForm from "@/hooks/useGetListedForm"; // Importing our custom hook
+import { ogImage, siteUrl } from "@/utils/constants";
 import Head from "next/head";
 import Script from "next/script";
 
@@ -23,36 +24,26 @@ const GetListedPage = () => {
     handleSubmit,
     mathChallenge,
   } = useGetListedForm();
+  const pageDescription =
+    "Apply to get listed on Dark Web Navigator, the trusted resource for exploring the dark web. Showcase your marketplace, service, or forum to our growing audience.";
+  const pageTitle = "Get Listed on Dark Web Navigator - Join the Network";
   return (
     <div className="py-12 sm:px-6 lg:px-8 mx-auto p-6 max-w-3xl bg-background text-foreground rounded-lg">
       <Head>
-        <title>Get Listed - Dark Web Navigator</title>
-        <meta
-          name="description"
-          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web, including access to hidden websites, darknet forums, and tools for private communication"
-        />
-        <meta property="og:title" content="Homepage - Dark Web Navigator" />
-        <meta
-          property="og:description"
-          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web, including access to hidden websites, darknet forums, and tools for private communication"
-        />
-        <meta
-          property="og:image"
-          content="https://darkwebnavigator.com/logo.png"
-        />
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <meta property="og:image" content={ogImage} />
 
         {/* Twitter card tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Homepage - Dark Web Navigator" />
-        <meta
-          name="twitter:description"
-          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web..."
-        />
-        <meta
-          name="twitter:image"
-          content="https://darkwebnavigator.com/logo.png"
-        />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content={ogImage} />
         <meta name="twitter:site" content="@darkwebnavigator" />
+        {/* Canonical Tag */}
+        <link rel="canonical" href={`${siteUrl}/get-listed`} />
       </Head>
       {/* Google Analytics */}
       <Script
