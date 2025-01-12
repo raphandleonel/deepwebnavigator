@@ -67,19 +67,15 @@ export default function HomePage({
       posts: posts.filter((i) => i.category.slug.current === "guides"),
     },
   ];
+  const pageDescription =
+    "Dark Web Navigator is your trusted guide to exploring the dark web, finding hidden websites, darknet forums, and tools for secure communication.";
   return (
     <>
       <Head>
-        <title>Homepage - Dark Web Navigator</title>
-        <meta
-          name="description"
-          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web, including access to hidden websites, darknet forums, and tools for private communication"
-        />
+        <title>Dark Web Navigator: Your Guide to the Hidden Internet</title>
+        <meta name="description" content={pageDescription} />
         <meta property="og:title" content="Homepage - Dark Web Navigator" />
-        <meta
-          property="og:description"
-          content="Darkwebnavigator is a resource hub for those seeking information on navigating the Dark Web, including access to hidden websites, darknet forums, and tools for private communication"
-        />
+        <meta property="og:description" content={pageDescription} />
         <meta
           property="og:image"
           content="https://darkwebnavigator.com/logo.png"
