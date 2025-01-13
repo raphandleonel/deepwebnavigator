@@ -76,7 +76,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Map posts to sitemap format
   const postPages: MetadataRoute.Sitemap = posts.map(
     (post: SanityDocument) => ({
-      url: `https://darkwebnavigator.com/posts/${post.currentSlug}`,
+      url: `https://darkwebnavigator.com/${post.currentSlug}`,
       lastModified: new Date(post.lastModified).toISOString(),
       changeFrequency: "weekly" as const,
       priority: 0.9,
