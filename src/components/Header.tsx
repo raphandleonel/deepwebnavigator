@@ -13,6 +13,8 @@ import {
   ShoppingBagIcon,
   ChevronDownIcon,
   InformationCircleIcon,
+  Bars3Icon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import SubscribeModal from "./SubscribeModal";
@@ -105,6 +107,8 @@ export default function Header() {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const [query, setQuery] = useState("");
   useEffect(() => {
     setMounted(true);
@@ -145,7 +149,7 @@ export default function Header() {
   return (
     <header className="bg-background text-foreground items-center">
       {/* Top Section */}
-      <div className="flex items-center justify-between px-4 py-3 container mx-auto lg:gap-6">
+      <div className="flex items-center justify-between px-4 py-3 container mx-auto gap-6">
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
@@ -163,7 +167,8 @@ export default function Header() {
             className={resolvedTheme === "light" ? "block" : "hidden"}
           />
         </Link>
-        <div className="hidden lg:block relative w-full max-w-2xl">
+
+        <div className="relative w-full max-w-2xl">
           {/* Search Form */}
           <form className="relative" onSubmit={handleSearch}>
             <div className="relative">
@@ -171,12 +176,12 @@ export default function Header() {
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                className="block w-full p-2 lg:pl-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Search posts..."
               />
               <button
                 type="submit"
-                className="absolute right-1 bottom-1 bg-blue-600 text-white px-4 py-1 rounded-lg hover:bg-blue-700"
+                className="absolute right-0 bottom-0 top-0 bg-blue-600 text-white px-3 rounded-r-lg hover:bg-blue-700"
               >
                 Search
               </button>
@@ -219,7 +224,20 @@ export default function Header() {
           </div>
         </div>
 
-        <div className="items-center space-x-4 flex">
+        {/* Hamburger Menu for Mobile */}
+        <button
+          className="lg:hidden block text-gray-700 dark:text-gray-300"
+          style={{ zIndex: 9999999 }}
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? (
+            <XMarkIcon className="h-6 w-6" />
+          ) : (
+            <Bars3Icon className="h-6 w-6" />
+          )}
+        </button>
+
+        <div className="hidden lg:flex items-center space-x-4">
           {/* Subscribe Button */}
           <SubscribeModal />
 
@@ -227,13 +245,10 @@ export default function Header() {
           <div
             className="relative group"
             onMouseEnter={() => setShowDropdown(true)}
-            // onMouseLeave={() => setShowDropdown(false)} // Hide dropdown on mouse leave
+            onMouseLeave={() => setShowDropdown(false)} // Hide dropdown on mouse leave
           >
             {/* Button */}
-            <button
-              onClick={() => setShowDropdown(!showDropdown)}
-              className="flex items-center text-sm font-semibold text-white bg-gray-600 hover:bg-gray-700 transition-all px-4 py-2 rounded-lg"
-            >
+            <button className="flex items-center text-sm font-semibold text-white bg-gray-600 hover:bg-gray-700 transition-all px-4 py-2 rounded-lg">
               Support
               <ChevronDownIcon
                 className={`h-4 w-4 ml-2 transition-transform ${
@@ -245,7 +260,7 @@ export default function Header() {
             {/* Dropdown Menu */}
             {showDropdown && (
               <div
-                className="absolute right-0 mt-2 bg-white shadow-md rounded-md py-2 w-48 z-10 dark:bg-gray-700 dark:text-white"
+                className="absolute right-0 bg-white shadow-md rounded-md py-2 w-48 z-10 dark:bg-gray-700 dark:text-white"
                 onMouseLeave={() => setShowDropdown(false)}
               >
                 <ul className="text-sm text-gray-700 dark:text-gray-200">
@@ -295,6 +310,62 @@ export default function Header() {
         </div>
       </div>
 
+      {/* Mobile Menu */}
+      <div
+        style={{ zIndex: 9999 }}
+        className={`lg:hidden bg-gray-100 pt-10 dark:bg-gray-800 text-gray-800 dark:text-gray-200 fixed top-0 right-0 h-full w-2/3 max-w-xs shadow-lg transition-transform duration-300 ease-in-out transform ${
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="px-4 py-4 space-y-4">
+          {/* Support */}
+          <div>
+            <h3 className="text-lg font-semibold mb-3">Support</h3>
+            <ul className="flex flex-col space-y-3">
+              <li>
+                <Link
+                  href="/contact-us"
+                  className="block text-sm font-medium hover:text-highlight"
+                >
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/get-listed"
+                  className="block text-sm font-medium hover:text-highlight"
+                >
+                  Get Listed
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Dark Mode Toggle */}
+          <div className="flex items-center justify-between">
+            <span className="text-sm font-semibold">
+              {resolvedTheme === "dark" ? "Light Mode" : "Dark Mode"}
+            </span>
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle dark mode"
+              className="flex items-center focus:outline-none"
+            >
+              {resolvedTheme === "dark" ? (
+                <SunIcon className="h-6 w-6" />
+              ) : (
+                <MoonIcon className="h-6 w-6" />
+              )}
+            </button>
+          </div>
+
+          {/* Subscribe */}
+          <div className="flex items-center justify-between">
+            <SubscribeModal />
+          </div>
+        </div>
+      </div>
+
       {/* Navigation */}
       <nav className="relative border-y border-gray-700 bg-background">
         <ul className="flex items-center lg:justify-evenly space-x-4 px-4 container mx-auto overflow-x-auto">
@@ -309,12 +380,10 @@ export default function Header() {
                     : "hover:border-highlight hover:border-b-2"
                 }`}
                 onMouseEnter={() =>
-                  item.name === "News" &&
-                  setShowCategoriesDropdown(!showCategoriesDropdown)
+                  item.name === "News" && setShowCategoriesDropdown(true)
                 }
-                onClick={() =>
-                  item.name === "News" &&
-                  setShowCategoriesDropdown(!showCategoriesDropdown)
+                onMouseLeave={() =>
+                  item.name === "News" && setShowCategoriesDropdown(false)
                 }
               >
                 <Link
@@ -333,35 +402,35 @@ export default function Header() {
                     />
                   )}
                 </Link>
-                {item.name === "News" &&
-                  showCategoriesDropdown &&
-                  categories.length > 0 && (
-                    <div
-                      className="absolute top-full left-0 w-full mt-2 px-4"
-                      onMouseEnter={() => setShowCategoriesDropdown(true)}
-                      onMouseLeave={() => setShowCategoriesDropdown(false)}
+                {item.name === "News" && (
+                  <div
+                    className={`absolute top-full left-0 w-full px-4 transition-all duration-300 ease-in-out transform ${
+                      showCategoriesDropdown
+                        ? "opacity-100 scale-100"
+                        : "opacity-0 scale-95 pointer-events-none"
+                    }`}
+                  >
+                    <ul
+                      className="container sm:mx-auto bg-white shadow-md rounded-md py-4 z-10000 dark:bg-gray-700 dark:text-white grid lg:grid-cols-3 grid-cols-2 gap-4 px-4"
+                      style={{ position: "relative", zIndex: 999999 }}
                     >
-                      <ul
-                        className="container sm:mx-auto bg-white shadow-md rounded-md py-4 z-10000 dark:bg-gray-700 dark:text-white grid lg:grid-cols-3 grid-cols-2 gap-4 px-4"
-                        style={{ position: "relative", zIndex: 999999 }}
-                      >
-                        {categories.map((category) => (
-                          <li
-                            key={category.slug}
-                            className="flex items-center overflow-x-hidden"
+                      {categories.map((category) => (
+                        <li
+                          key={category.slug}
+                          className="flex items-center overflow-x-hidden"
+                        >
+                          <Link
+                            href={`/category/${category.slug}`}
+                            className="flex items-center px-4 py-2 text-sm sm:text-base text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                           >
-                            <Link
-                              href={`/category/${category.slug}`}
-                              className="flex items-center px-4 py-2 text-sm sm:text-base text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              <span className="mr-2">{category.icon}</span>
-                              <span className="truncate">{category.title}</span>
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                            <span className="mr-2">{category.icon}</span>
+                            <span className="truncate">{category.title}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </li>
             );
           })}
