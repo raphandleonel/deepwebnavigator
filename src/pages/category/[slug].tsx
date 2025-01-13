@@ -32,6 +32,7 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     props: {
       category: categoryData,
       posts: categoryData.posts,
+      slug: params.slug,
     },
     revalidate: 30,
   };
@@ -40,12 +41,13 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 type Props = {
   category: Category;
   posts: Post[];
+  slug: string;
 };
 
-export default function CategoryPage({ category, posts }: Props) {
+export default function CategoryPage({ category, posts, slug }: Props) {
   return (
     <div className="container mx-auto px-4 py-8">
-      <Metadata category={category} posts={posts} />
+      <Metadata category={category} slug={slug} />
       <h1 className="text-3xl font-bold mb-4">{category.title}</h1>
       {posts.length ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -60,13 +62,10 @@ export default function CategoryPage({ category, posts }: Props) {
   );
 }
 
-function Metadata({ category, posts }: { category: Category; posts: Post[] }) {
+function Metadata({ category, slug }: { category: Category; slug: string }) {
   const keywords = category.keywords?.join(", ") || "";
-  const categoryUrl = `${siteUrl}/category/`;
-  const ogUrl =
-    posts.length > 0
-      ? `${siteUrl}/category/${posts[0]?.category?.slug?.current}`
-      : categoryUrl;
+
+  const ogUrl = `${siteUrl}/category/${slug}`;
   const pageDescription = `Discover insightful articles in the ${category.title} category on Dark Web Navigator. Explore curated posts, tips, and guides related to ${category.title}.`;
   return (
     <>
