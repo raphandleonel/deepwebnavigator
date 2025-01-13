@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ogImage, siteUrl } from "@/utils/constants";
 import { urlFor } from "@/utils/imageBuilder";
+import Script from "next/script";
 
 type Author = {
   name: string;
@@ -51,7 +52,7 @@ export default function AuthorIndexPage({ authors }: Props) {
         <meta name="twitter:site" content="@darkwebnavigator" />
         <link rel="canonical" href={ogUrl} />
       </Head>
-         {/* Google Analytics */}
+      {/* Google Analytics */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-BBGWDRZQGK"
         strategy="afterInteractive"
