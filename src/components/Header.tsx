@@ -404,6 +404,7 @@ export default function Header() {
                 </Link>
                 {item.name === "News" && (
                   <div
+                    style={{ zIndex: 10000 }}
                     className={`absolute top-full left-0 w-full px-4 transition-all duration-300 ease-in-out transform ${
                       showCategoriesDropdown
                         ? "opacity-100 scale-100"
