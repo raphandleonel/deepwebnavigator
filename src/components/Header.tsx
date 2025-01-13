@@ -100,7 +100,6 @@ const navigationItems = [
 
 export default function Header() {
   const { setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false); // State to control dropdown visibility
   const [showCategoriesDropdown, setShowCategoriesDropdown] = useState(false); // Dropdown state
@@ -110,11 +109,6 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const [query, setQuery] = useState("");
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
 
   const toggleTheme = () => {
     const newTheme = resolvedTheme === "dark" ? "light" : "dark";
@@ -157,14 +151,6 @@ export default function Header() {
             alt="Dark Web Navigator Logo"
             width={60}
             height={60}
-            className={resolvedTheme === "dark" ? "block" : "hidden"}
-          />
-          <Image
-            src="/logo.png"
-            alt="Dark Web Navigator Logo"
-            width={60}
-            height={60}
-            className={resolvedTheme === "light" ? "block" : "hidden"}
           />
         </Link>
 
