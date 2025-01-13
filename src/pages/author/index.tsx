@@ -51,6 +51,19 @@ export default function AuthorIndexPage({ authors }: Props) {
         <meta name="twitter:site" content="@darkwebnavigator" />
         <link rel="canonical" href={ogUrl} />
       </Head>
+         {/* Google Analytics */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-BBGWDRZQGK"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BBGWDRZQGK');
+        `}
+      </Script>
 
       <h1 className="text-3xl font-bold mb-6">Authors</h1>
       {authors.length > 0 ? (
