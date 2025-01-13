@@ -11,7 +11,7 @@ const staticPages: MetadataRoute.Sitemap = [
     priority: 1,
   },
   {
-    url: "https://darkwebnavigator.com/contact",
+    url: "https://darkwebnavigator.com/contact-us",
     lastModified: new Date().toISOString(),
     changeFrequency: "yearly",
     priority: 0.8,

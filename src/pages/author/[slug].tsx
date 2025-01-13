@@ -31,8 +31,10 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 export default function AuthorPage({
   author,
   posts,
+  slug,
 }: {
-  author: { name: string; bio?: string; slug: string };
+  author: { name: string; bio?: string };
+  slug: string;
   posts: Post[];
 }) {
   const pageTitle = `Posts by ${author.name} - Dark Web Navigator`;
@@ -40,7 +42,7 @@ export default function AuthorPage({
     ? `${author.bio}`
     : `Explore articles and posts authored by ${author.name} on Dark Web Navigator.`;
   const ogImage = "https://darkwebnavigator.com/logo.png";
-  const ogUrl = `https://darkwebnavigator.com/author/${author.slug}`;
+  const ogUrl = `https://darkwebnavigator.com/author/${slug}`;
 
   return (
     <div className="container mx-auto px-4 py-8">
