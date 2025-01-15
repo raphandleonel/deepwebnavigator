@@ -299,8 +299,33 @@ export default function PostPage({
                     em: ({ children }) => (
                       <em className="italic text-foreground">{children}</em> // Apply italic and text color for em
                     ),
-                    link: ({ children, value }) => (
-                      <div className="flex items-center space-x-2 overflow-hidden w-full">
+                    link: ({ children, value }) => {
+                      const isOnionLink = value.href.includes(".onion");
+
+                      return isOnionLink ? (
+                        <div className="flex items-center space-x-2 overflow-hidden w-full">
+                          <a
+                            href={
+                              value.href.startsWith("http")
+                                ? value.href
+                                : `https://${value.href}`
+                            }
+                            className="text-blue-600 hover:text-blue-800 truncate max-w-full"
+                          >
+                            {children}
+                          </a>
+                          <button
+                            onClick={() => handleCopy(value.href, value.href)}
+                            className="text-blue-600 hover:text-blue-800"
+                          >
+                            {copiedLinks[value.href] ? (
+                              <CheckIcon className="w-5 h-5" />
+                            ) : (
+                              <ClipboardDocumentIcon className="w-5 h-5" />
+                            )}
+                          </button>
+                        </div>
+                      ) : (
                         <a
                           href={
                             value.href.startsWith("http")
@@ -311,18 +336,8 @@ export default function PostPage({
                         >
                           {children}
                         </a>
-                        <button
-                          onClick={() => handleCopy(value.href, value.href)}
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          {copiedLinks[value.href] ? (
-                            <CheckIcon className="w-5 h-5" />
-                          ) : (
-                            <ClipboardDocumentIcon className="w-5 h-5" />
-                          )}
-                        </button>
-                      </div>
-                    ),
+                      );
+                    },
                   },
                   types: {
                     // Custom component for images
