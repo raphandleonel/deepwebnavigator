@@ -3,10 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 
 const socialLinks = [
-  // {
-  //   href: "https://twitter.com/DarkWebnavigator",
-  //   label: "Twitter",
-  // },
+  {
+    href: "https://twitter.com/DarkWebnavigator",
+    label: "Twitter",
+  },
   // {
   //   href: "https://youtube.com/@DarkWebnavigator",
   //   label: "YouTube",
