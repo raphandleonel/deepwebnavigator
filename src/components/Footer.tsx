@@ -16,7 +16,7 @@ const socialLinks = [
   //   label: "LinkedIn",
   // },
   {
-    href: "https://www.telegram.com/@darkwebnavigator/",
+    href: "https://www.telegram.com/@darkwebnav/",
     label: "Telegram",
   },
   // {

@@ -89,7 +89,7 @@ export default function HomePage({
           name="twitter:image"
           content="https://darkwebnavigator.com/logo.png"
         />
-        <meta name="twitter:site" content="@darkwebnavigator" />
+        <meta name="twitter:site" content="@darkwebnav" />
         {/* Canonical Tag */}
         <link rel="canonical" href="https://darkwebnavigator.com" />
       </Head>

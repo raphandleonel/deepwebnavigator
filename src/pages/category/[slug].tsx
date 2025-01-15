@@ -97,7 +97,7 @@ function Metadata({ category, slug }: { category: Category; slug: string }) {
           content={category.description || pageDescription}
         />
         <meta name="twitter:image" content={ogImage} />
-        <meta name="twitter:site" content="@darkwebnavigator" />
+        <meta name="twitter:site" content="@darkwebnav" />
         <link rel="canonical" href={ogUrl} />
       </Head>
       {/* Google Analytics */}

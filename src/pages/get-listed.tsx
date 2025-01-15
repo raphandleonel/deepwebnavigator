@@ -41,7 +41,7 @@ const GetListedPage = () => {
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDescription} />
         <meta name="twitter:image" content={ogImage} />
-        <meta name="twitter:site" content="@darkwebnavigator" />
+        <meta name="twitter:site" content="@darkwebnav" />
         {/* Canonical Tag */}
         <link rel="canonical" href={`${siteUrl}/get-listed`} />
       </Head>
