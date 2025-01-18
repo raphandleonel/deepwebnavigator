@@ -47,10 +47,10 @@ export default function Banner({ banners }: BannerProps) {
 
   return (
     <section className="bg-secondary p-4 text-center text-foreground rounded-lg my-0 sm:my-5">
-      <p className="text-sm sm:text-lg mb-8 px-4 font-bold text-highlight">
+      <h1 className="text-sm sm:text-lg mb-8 px-4 font-bold text-highlight">
         Your hub for navigating the Dark Web, accessing hidden sites, forums,
         and privacy tools.
-      </p>
+      </h1>
       <section className="relative w-full overflow-hidden rounded-lg">
         {/* Banner Images Section */}
         <div className="flex w-full h-[70px] sm:h-[150px] gap-1">
