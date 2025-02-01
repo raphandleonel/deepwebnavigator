@@ -1,4 +1,5 @@
 User-Agent: *
 Allow: /
+Disallow: /*.onion$
 
 Sitemap: https://darkwebnavigator.com/sitemap.xml
